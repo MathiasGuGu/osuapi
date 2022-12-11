@@ -42,7 +42,7 @@ const [auth, setAuth] = useState()
 fetch("https://osu.ppy.sh/api/v2/", {
     method: "GET",
     headers,
-}).then(response => response.json())
+}).then(response => console.log(response.json()))
 
 
  
