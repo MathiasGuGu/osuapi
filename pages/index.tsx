@@ -1,8 +1,51 @@
 import Head from 'next/head'
 import Image from 'next/image'
+import { useState } from 'react'
 import styles from '../styles/Home.module.css'
-
+import { data } from '../osuApiData'
 export default function Home() {
+  const [auth_code, setAuth_code] = useState("")
+  
+
+
+
+
+
+
+
+
+  let body = {
+    client_id: "19271",
+    client_secret: "aYIYEVy5XEPPoheQHSsKC2HPD6wjBQVfTz39RN6G",
+    code: "def5020026f885ab919232e2507323413f116fdfc02eb799290858421193e246fbf17f31f78236f9506ecbbcd483a7c3f53d4a81f15788b30cc61daf0665d9eaba229f451c2702bbac8941a0e05b81c3340c0e37b4ed9944deb2231d8a64297ed9f127acd2fba90ca40154154ebd6047fc2219297b2f16d021ba4fdb68193d7c72373d5e6cb0d9a2a96ea568c33c1f84959a7696b67ff0d5a81e2b03b6d00a8f94e21dabce10140a61c1d01413b7f1965cb4ea8dd6a30f805b32bcc61b94617a05d031c402202d006e8cc30f1f44d56ae870629ef06343b61501629929b56066805fad02ed663368d88b561413d7c893349c155d98dc8227ead4d836c762740ae9cc35af40c4fbd98f47e77f1beb8930fcfd92c0d971c1a3e35bc185b49aedf50d241f298237350e9f18dffdc3196b76e3e6f5e45da89473bfff29e85ca28551ace2aee6b0f803d2b5a252788320775c2724c8efcbcf80f4eeb5150d9292ec8ecaad220f71db867c89e4f899e320c066aa71",
+    grant_type: "authorization_code",
+    redirect_uri: "https://osunorway.vercel.app/",
+  };
+  
+  const access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxOTI3MSIsImp0aSI6ImYwZjU3MjMwYmEyM2NlZWU3NTFkZDQ1N2UzZTdhNDFhZjM3MmY0YTMzNmZkYmY5MzYyYTAzMTljYmVkMGZkNDdkYzQxNWM2M2M5OWNmY2UxIiwiaWF0IjoxNjcwNzE0OTY4LjAyNzUwMSwibmJmIjoxNjcwNzE0OTY4LjAyNzUwNSwiZXhwIjoxNjcwODAwNTIyLjU4MDg0OCwic3ViIjoiMTI4MDU1NDUiLCJzY29wZXMiOlsiaWRlbnRpZnkiXX0.kU0Qa8barNcTQVQWCXbXzdCna9gwA7LISGvzGVkDtqzXM0WYQ9XIIn4G8il9pAmHVDryJKbOgrxsQ7TquH7lVh1nbqIpuwPgeHA609LlKhQgWRh8R0WTMsIIX7i7dvKLG4IUtLmUsW8PgU_LUsj39V4Ckc-t0n0OUJ2gO18eEZ-uhQETow4D1_joQZjjVrSSGw6_7kpiSwAGPGlghOEzc4Djozm95sc_h0QkBx-IrSD3Pavc6GR8-j3leIihDdQwRI93H09Gq1Ca1dVP9AoVek4oCnI1WjeQSHO9uZiDN4okIep5ZqLPucmx7x_dLkLiR2I_ChivB1b8ddcyZG7lrPs6-yP-W1dDjuqXkHjldSWFzJnpcuCLE7z3WBecDsdvZZa55Ggoq2W7vn4o6Q6IPzkNn3McFR81rrUT60nuK41874BdkifMs77msdn9rqUtnKJ0n19yc3uQOOuSFm5fY5YZBufstczZjiNoIjHP94AUXj7WEb8pQ_iXWbWnPFnOW8r83ssKxTTlkp1NOg06kjFBmCHV2aKy9wA_ge301y8Lv1vru-E6UONYI0MZ3M6W15ZFVcZ8Z3rX42R-pMn9XmnMTZ1sm4DqUfJo92_d4XqdjSTWxSaLMidBrYdGXzS7yNI3gHkdLyjF4uMZMsQ9bjtPZyWZaGBaFys3VRl2iBw"
+  const refresh_token = "def50200e5ac5a1ce0f4e366b48444079008d130a10cc0bebd3a2149354e8d7fc87f07c0c517b2a706bd9101fb6e7996ac14deaec72691184f0b969d11977a5343c9737a809fa05258a5256dd55e977184e20c8010f545ed597d7ba22c032cb18a7dcbe6237180f03dd2cde37c6c803fd31c512416277975486d77d5a2753518cf46071f26ea5f78ede2fb2a2db49372c935f1677946f5c41e3967a613045c945084ff0bddf5f6e0f82444c335205eb64cf8f0945f80d8fa473d7ead3a7b97bef887c85492e78f2faf1aaf76f3aada182d5b8e2c46a25caba6f98eb77dd46ccc027466ed6b0879be00fa35247204f217d101a415e4d1ca65b8b2edfdd194530501f2e1956d1a15b2c8003a58de4821ecf87e9acc3d3f3e1bcb53a124e9bc8a72821cdb386221a50a10e9de7c1ff2ffef319e5c48dc435dc2e7bcf82bb980a93524856863126726b00ee027c7a87c447eec00833374a8f1f926ecbd288ecaf7b1fdee58f0830a039a8f3881bbbfe73bc4544f352fb0eb"
+
+
+
+let params = {
+    "key": "consequatur",
+};
+
+let headers = {
+  "Accept": "application/json",
+  "Content-Type": "application/json",
+  
+    "Authorization": "Bearer {{eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxOTI3MSIsImp0aSI6ImRkYmY3YjYzZDExMWJmNWE1ZWNkNDY5ZWIyZDIyNzI1MWE3ZGNhM2UyMjA5ZmJhY2ZhMzYwNTExNWFmNzg4NzgzODkyMmE3MTBhYzhlOGMxIiwiaWF0IjoxNjcwNzE2NjYyLjE1NjQxOCwibmJmIjoxNjcwNzE2NjYyLjE1NjQyMiwiZXhwIjoxNjcwODAyNDY1LjQ3OTI1NCwic3ViIjoiMTI4MDU1NDUiLCJzY29wZXMiOlsiaWRlbnRpZnkiXX0.M3o3w9TDZWbllyNr21J8vJ4cKz5aSBrpKG8z_qpvCpSrxesuH6hdVWDberrJe1LvZxUMAAWyVf4es6OoG6WnCbMqDow-BQ86KCf4kz49X7umMb8Ye2i3GrenC9awKYmI3n5N-tUU_A3Xc3s8PCdHB_89a18SgtIluT3ddxPVjY857My5SC1g-LzxRllTcX_x73FpeWe1g5tVvhqjEAWlDkrEYCg5JBS4ZsYqa6g2t2Po2QSBGpCYIvhj-JN4iioQZULXDYJblQGjVE19xSTgUoAlDSa-I70wv02fkiMifA_WaeTuuZkE2gubetDhx5chmXkCMP_jTDBJx1x81UbiqTT0Ke7BxQw5zdGqNz_1udF_da6w9ddqzR0LMJxcXhQfFOiMVWNc_kaX1S87f1T5K1XXmJVj0SnCYiNC29CKtK8eLnGtxIA8O_7XxqimKgy_MAcCpnf29vWvJD9-8XSOqhe9pvnJDxLh33L2Q2y2EuaKMu53Rcpa94QusZl5OukVPL87BupHcnzmszkWJXgIH7cg8fxsjlcEAT7fATF_IJROTiDCbY1XZLTsjay30oCt7PoHe14QC8U9L_MCO7n_N-RCwJqX2difThOT2JJWvvVU0ppf3H6U10TqUaReasapYfDhjt9qgfB-pX7KM4BKXY3Js9mRkifSTc_fG0zsIbk}}"
+};
+
+const [auth, setAuth] = useState()
+fetch("https://osu.ppy.sh/api/v2/", {
+    method: "GET",
+    headers,
+}).then(response => response.json())
+
+
+ 
   return (
     <div className={styles.container}>
       <Head>
@@ -12,59 +55,10 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.tsx</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className={styles.card}
-          >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
+        </main>
 
       <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
+        
       </footer>
     </div>
   )
