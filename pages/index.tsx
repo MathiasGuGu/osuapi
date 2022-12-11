@@ -12,20 +12,22 @@ export default function Home() {
 
 
 
-const headers = new Headers();
-  headers.append("X-CUSTOM-HEADER", "foo");
-headers.append("Accept", "application/json")
-headers.append("Content-Type", "application/json")
-headers.append("Authorization", "Bearer {{eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxOTI3MSIsImp0aSI6ImRkYmY3YjYzZDExMWJmNWE1ZWNkNDY5ZWIyZDIyNzI1MWE3ZGNhM2UyMjA5ZmJhY2ZhMzYwNTExNWFmNzg4NzgzODkyMmE3MTBhYzhlOGMxIiwiaWF0IjoxNjcwNzE2NjYyLjE1NjQxOCwibmJmIjoxNjcwNzE2NjYyLjE1NjQyMiwiZXhwIjoxNjcwODAyNDY1LjQ3OTI1NCwic3ViIjoiMTI4MDU1NDUiLCJzY29wZXMiOlsiaWRlbnRpZnkiXX0.M3o3w9TDZWbllyNr21J8vJ4cKz5aSBrpKG8z_qpvCpSrxesuH6hdVWDberrJe1LvZxUMAAWyVf4es6OoG6WnCbMqDow-BQ86KCf4kz49X7umMb8Ye2i3GrenC9awKYmI3n5N-tUU_A3Xc3s8PCdHB_89a18SgtIluT3ddxPVjY857My5SC1g-LzxRllTcX_x73FpeWe1g5tVvhqjEAWlDkrEYCg5JBS4ZsYqa6g2t2Po2QSBGpCYIvhj-JN4iioQZULXDYJblQGjVE19xSTgUoAlDSa-I70wv02fkiMifA_WaeTuuZkE2gubetDhx5chmXkCMP_jTDBJx1x81UbiqTT0Ke7BxQw5zdGqNz_1udF_da6w9ddqzR0LMJxcXhQfFOiMVWNc_kaX1S87f1T5K1XXmJVj0SnCYiNC29CKtK8eLnGtxIA8O_7XxqimKgy_MAcCpnf29vWvJD9-8XSOqhe9pvnJDxLh33L2Q2y2EuaKMu53Rcpa94QusZl5OukVPL87BupHcnzmszkWJXgIH7cg8fxsjlcEAT7fATF_IJROTiDCbY1XZLTsjay30oCt7PoHe14QC8U9L_MCO7n_N-RCwJqX2difThOT2JJWvvVU0ppf3H6U10TqUaReasapYfDhjt9qgfB-pX7KM4BKXY3Js9mRkifSTc_fG0zsIbk}}")
-headers.append("Access-Control-Allow-Origin", "*")
-headers.append("Access-Control-Allow-Methods","POST, GET, OPTIONS, DELETE, PUT")
-headers.append("Access-Control-Allow-Headers", "append,delete,entries,foreach,get,has,keys,set,values,Authorization")
-const [auth, setAuth] = useState()
-fetch("https://osu.ppy.sh/api/v2/", {
-    method: "GET",
-    headers,
-}).then(response => console.log(response.json()))
 
+const [auth, setAuth] = useState()
+
+
+const options = {
+  method: 'GET',
+  headers: {
+    cookie: 'INGRESSCOOKIE=1670705762.691.1256.818301%7C2e47652f2686b7573cc1f929e3bf79ae; XSRF-TOKEN=jDUAnGaCm5jPMhgz6Eg9X10gX8Zcf6bXOLa204q7; osu_session=eyJpdiI6Ik5lSUhpWGwvTkRkR3g5OXNiMFMxN0E9PSIsInZhbHVlIjoib0V6S3JTY2pSci9pamF4UGlvSHMwSlV3aVVZTmFvN0tRdnIxTnRZd1doS0xPVUM5N0xFV0N5SDJtRjdjNWVDVmJTWjZHcFNycDk0NStTRlhlaFdSMm5zNXp5RFU0eUhtNVd1SEtRWk51SUZWS3N0TXJxUnVINllva0d4U1VadmpWRW9nR3ZIVWpodFFUL25nUmQrNFdnPT0iLCJtYWMiOiI2NDFhM2UxMmU0NTg4MWM5NWYzMDVmZDdhN2U4MjgxYzNlN2NkYTI4YjgwNTQ0ZTQxZjkzOTVlNWVmZTg5ZmVhIiwidGFnIjoiIn0%253D',
+    Authorization: 'Bearer {{eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxOTI3MSIsImp0aSI6ImRkYmY3YjYzZDExMWJmNWE1ZWNkNDY5ZWIyZDIyNzI1MWE3ZGNhM2UyMjA5ZmJhY2ZhMzYwNTExNWFmNzg4NzgzODkyMmE3MTBhYzhlOGMxIiwiaWF0IjoxNjcwNzE2NjYyLjE1NjQxOCwibmJmIjoxNjcwNzE2NjYyLjE1NjQyMiwiZXhwIjoxNjcwODAyNDY1LjQ3OTI1NCwic3ViIjoiMTI4MDU1NDUiLCJzY29wZXMiOlsiaWRlbnRpZnkiXX0.M3o3w9TDZWbllyNr21J8vJ4cKz5aSBrpKG8z_qpvCpSrxesuH6hdVWDberrJe1LvZxUMAAWyVf4es6OoG6WnCbMqDow-BQ86KCf4kz49X7umMb8Ye2i3GrenC9awKYmI3n5N-tUU_A3Xc3s8PCdHB_89a18SgtIluT3ddxPVjY857My5SC1g-LzxRllTcX_x73FpeWe1g5tVvhqjEAWlDkrEYCg5JBS4ZsYqa6g2t2Po2QSBGpCYIvhj-JN4iioQZULXDYJblQGjVE19xSTgUoAlDSa-I70wv02fkiMifA_WaeTuuZkE2gubetDhx5chmXkCMP_jTDBJx1x81UbiqTT0Ke7BxQw5zdGqNz_1udF_da6w9ddqzR0LMJxcXhQfFOiMVWNc_kaX1S87f1T5K1XXmJVj0SnCYiNC29CKtK8eLnGtxIA8O_7XxqimKgy_MAcCpnf29vWvJD9-8XSOqhe9pvnJDxLh33L2Q2y2EuaKMu53Rcpa94QusZl5OukVPL87BupHcnzmszkWJXgIH7cg8fxsjlcEAT7fATF_IJROTiDCbY1XZLTsjay30oCt7PoHe14QC8U9L_MCO7n_N-RCwJqX2difThOT2JJWvvVU0ppf3H6U10TqUaReasapYfDhjt9qgfB-pX7KM4BKXY3Js9mRkifSTc_fG0zsIbk}}'
+  },
+};
+
+fetch('https://osu.ppy.sh/api/v2/', options)
+  .then(response => response.json())
+  .then(response => console.log(response))
+  .catch(err => console.error(err));
 
  
   return (
