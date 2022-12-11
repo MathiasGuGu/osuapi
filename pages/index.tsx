@@ -18,6 +18,8 @@ headers.append("Accept", "application/json")
 headers.append("Content-Type", "application/json")
 headers.append("Authorization", "Bearer {{eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxOTI3MSIsImp0aSI6ImRkYmY3YjYzZDExMWJmNWE1ZWNkNDY5ZWIyZDIyNzI1MWE3ZGNhM2UyMjA5ZmJhY2ZhMzYwNTExNWFmNzg4NzgzODkyMmE3MTBhYzhlOGMxIiwiaWF0IjoxNjcwNzE2NjYyLjE1NjQxOCwibmJmIjoxNjcwNzE2NjYyLjE1NjQyMiwiZXhwIjoxNjcwODAyNDY1LjQ3OTI1NCwic3ViIjoiMTI4MDU1NDUiLCJzY29wZXMiOlsiaWRlbnRpZnkiXX0.M3o3w9TDZWbllyNr21J8vJ4cKz5aSBrpKG8z_qpvCpSrxesuH6hdVWDberrJe1LvZxUMAAWyVf4es6OoG6WnCbMqDow-BQ86KCf4kz49X7umMb8Ye2i3GrenC9awKYmI3n5N-tUU_A3Xc3s8PCdHB_89a18SgtIluT3ddxPVjY857My5SC1g-LzxRllTcX_x73FpeWe1g5tVvhqjEAWlDkrEYCg5JBS4ZsYqa6g2t2Po2QSBGpCYIvhj-JN4iioQZULXDYJblQGjVE19xSTgUoAlDSa-I70wv02fkiMifA_WaeTuuZkE2gubetDhx5chmXkCMP_jTDBJx1x81UbiqTT0Ke7BxQw5zdGqNz_1udF_da6w9ddqzR0LMJxcXhQfFOiMVWNc_kaX1S87f1T5K1XXmJVj0SnCYiNC29CKtK8eLnGtxIA8O_7XxqimKgy_MAcCpnf29vWvJD9-8XSOqhe9pvnJDxLh33L2Q2y2EuaKMu53Rcpa94QusZl5OukVPL87BupHcnzmszkWJXgIH7cg8fxsjlcEAT7fATF_IJROTiDCbY1XZLTsjay30oCt7PoHe14QC8U9L_MCO7n_N-RCwJqX2difThOT2JJWvvVU0ppf3H6U10TqUaReasapYfDhjt9qgfB-pX7KM4BKXY3Js9mRkifSTc_fG0zsIbk}}")
 headers.append("Access-Control-Allow-Origin", "*")
+headers.append("Access-Control-Allow-Methods","POST, GET, OPTIONS, DELETE, PUT")
+headers.append("Access-Control-Allow-Headers", "append,delete,entries,foreach,get,has,keys,set,values,Authorization")
 const [auth, setAuth] = useState()
 fetch("https://osu.ppy.sh/api/v2/", {
     method: "GET",
