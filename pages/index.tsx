@@ -27,7 +27,7 @@ fetch("https://osu.ppy.sh/api/v2/me/mania", options)
   }).then(response => {
     setUsername(response.data.username)
     setCountry(response.data.country.name)
-    console.log(response)
+    console.log(response.data.username)
   }).catch(err => console.error(err))
  
   return (
