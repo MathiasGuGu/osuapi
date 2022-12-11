@@ -9,15 +9,3 @@ const TOKEN_URL = `https://osu.ppy.sh/oauth/token?client_id=${YENO_CLIENT_ID}&cl
 const GRANT_TYPE = "authorization_code"
 
 
-export const data = {
-    CLIENT_SECRET,
-    APP_CALLBACK_URL,
-    BASE_URL,
-    YENO_CLIENT_ID,
-    SCOPES,
-    RESPONE_TYPE,
-    AUTH_URL,
-    TOKEN_URL,
-    GRANT_TYPE
-}
-
