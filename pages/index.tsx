@@ -10,28 +10,51 @@ export default function Home() {
   const [country, setCountry] = useState("")
   const [rankHistory, setRankHistory] = useState([])
   const [authCode, setAuthCode] = useState<any>(null)
-  const options = {
-    method: 'GET',
-    headers: {
-      Authorization: 'Bearer def50200c995507120bd7aff8a0ca9ae41d83a05b561f0ace3055dbf279e99c94b4dca2cba845f8975fb8c5ae39b3dc514a2de1da62bb05b899cfc17e4e3577cfb0d6df8a3ecce821c8f217f2cf38080ead1cb1e7172975e932d209d7db4be56851b303410fa27b5f2b3432c3a3bc36a3d8a8a2f46643223446e6bedf7c59b92d283ed71a2e2ff53b15e21a18ec1d1dde26a2f62da9942ef8dbc75a2fbf783b4f4b64c314365568e7991a8179d93e4ded3adb04434c9da5470afc6b90c260f945837fe83ce535e4202048d8cf3e6e44b70fc9dcb6ca65d617d99f217fafe3a31d1d5384b0268d3c7c7852770aac63e317b8804b9d8d26649f68536aa7a2610c5b2208eea6b790188e1626b8e8a814630c6fa32136297c54ad133d024278d83798b83c9892b4afaf5e7fa7c21a955d239d5bc1e2f893c2beb0137957c4003e74d1e342a2f482e21443b24a29866b7f3385d48638034bfb73ebce5e2a8a0437bd296fe7a589e81f41575a212edbbde49c8f6d6'
-    },
-  };
+  const [accessToken, setAccessToken] = useState<any>(null)
 
-/* 
   useEffect(() => {
+    
 
-    fetch("https://osu.ppy.sh/api/v2/me", options)
+    const getBearerToken = async () => {
+      let headers = {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+    };
+      let body = {
+        "client_id":19271,
+        "client_secret": "aYIYEVy5XEPPoheQHSsKC2HPD6wjBQVfTz39RN6G",
+        "code": "def50200a9839ab8a4be6121a89e48c6c2114cb90362a8505b394d8aafb78d19fec0d056e89e5093e44787ecab2d024f353bef4509bff2066cc64a16327fcacbe08f94f4890477cc02111e020a228cadf6cc74751d16f7cfe9f583b614fffb15312c3772f25690ce3dc1cb01600bf4ac4a812b0cfa8e702e8d1d58360248dc59f44520b13096e2c562bec04d5eb3ee3784f0bc12bffd78d1ff7a8b1df5cd2c4768632da2a0f63fc27cdead41911d249edff91f2c23af36442096963920f0afca37bfc6bea6b824ef427fc9951a5e329a77740e80c1adac1e983a51b68cd62f58dd748be7548cfaf5f2d7b1e0d1d078215422cfa6309f691c157063884fa55b39d2b1addbcad1e4e531b3bf7b72f9ab3be3458ed7af13d60c7807bd8cf1163045a2c89f2455de7c4f7fa4f761755442a29531aa8c06d4a07707f3bf83167b804d00053de0de0a12d078c570535cac5d88a85e92c25acac336880e4ddfddd6586dcc1283e164e7ee9f07262c8b2a7d39dff8e7",
+        "grant_type": "authorization_code",
+        "redirect_uri": "https://osunorway.vercel.app/"
+    }
+    
+
+
+      let response = await fetch("https://osu.ppy.sh/oauth/token" , {
+        method: "POST", 
+        headers, 
+        body: JSON.stringify(body)
+      })
+      let data = await response.json()
+      console.log(data);
+      
+      setAccessToken(data["access_token"])
+      data["access_token"] && localStorage.setItem("accessToken", data["access_token"])
+      console.log(data["access_token"])
+    }
+  
+    getBearerToken()
+    const token = localStorage.getItem("accessToken")
+
+    fetch("https://osu.ppy.sh/api/v2/me/", {headers: {Authorization: `Bearer ${token}`}})
       .then(response => response.json())
       .then(response => {
         console.log(response)
-        setUsername(response.username);
-        setCountry(response.country.name);
-        setRankHistory(response.rankHistory.data)
-
+        setUsername(response.username)
       })
       .catch(err => console.error(err));
-  }, [])
-*/
+  }, [authCode])
+
 
 
 /*
@@ -48,15 +71,15 @@ display response data
 
 
   useEffect(() => {
-    
-
     const setAuth = async () => {
       setAuthCode(String(router.query.code))
       console.log(authCode);
+      
     }
     setAuth()
-    
+
   }, [router.query, authCode])
+
 
   return (
     <div className={styles.container}>
