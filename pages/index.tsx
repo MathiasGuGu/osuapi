@@ -1,36 +1,42 @@
 import axios from 'axios';
+import { log } from 'console';
 import Head from 'next/head'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import styles from '../styles/Home.module.css'
-export default function Home()  {
+export default function Home() {
   const [username, setUsername] = useState("")
   const [country, setCountry] = useState("")
-  const [rankHistory,setRankHistory] = useState([])
+  const [rankHistory, setRankHistory] = useState([])
 
-const options = {
-  method: 'GET',
-  headers: {
-    Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxOTI3MSIsImp0aSI6IjZkOWY3MWNkOWQ5YjNjZjM1YzhiMmFiMGI5NTNkNDcwYmI0NzAyMmVkNzlmYjUxNjNhZjgzMDk2ZjhjNTBhYzY5ZGU2MjBmNjgzNDNkYTlmIiwiaWF0IjoxNjcwNzIwNTYzLjE0MTgzNiwibmJmIjoxNjcwNzIwNTYzLjE0MTg0LCJleHAiOjE2NzA4MDY5MTEuNDYyNjEyLCJzdWIiOiIxMjgwNTU0NSIsInNjb3BlcyI6WyJpZGVudGlmeSIsInB1YmxpYyJdfQ.JV3BQGlN3X5qFCKi_EGa1Ia18QsulLVQi6L62P3FmE6G3ejEsJvgWoO0cFC1E7d_q-F9H5y0ED8QyResXuywDCrXhEb3uLhFoBiiz_03eW74gXn5S80f3hZ-1KHXTLpCSNHoPh-VLtRQ-1hwtDopEBZ5fYkcJ6BZ0Lt5tYgBp7WL09ez-CgeILCLHy2aGSfRInP_TQEOBoHaK2wL0I_1EejcdcEKcVtWnRA1sUud9tYr8F8vizcCO_r2_74BwNvBlhFVIJsCRlqZR_LzIF8fjGqadifoB5BB_wg-AAPEoB3ep1ZDdJEeUkSZoSkide1Hdh6wTZ-5yrh5oVCcIvylKEnu-2oWI42dhtdPOk4KXDab42xX8Z1mFz5BhIhAiyyqn3g3OWq2RF1txig93iYVk4Xzhrr0mJX_g4GX7JC8ErYBD2TQPPnY1o8C7U9G5W1U-ygirpySEpJ6Xc2omZQ2p7-4A5ciwCrt03MnMGEWhQ_BOopUHwh5uDrbK96ed76wljz3VYuSfNTmeNgTol8zu9XzxYPf_O3MTa9BIjmHAoFOSk6WBbjeGLqJZiIoZEvxuK6bmi6wqLZ2w0aRt9jBmWVuDsXaRmjvrq8CFSsQlyk5d5AP-N04HKDTRaVk3w3QaqmDm9VOpy54KvMBsFZFlMpQeF3iDgxbY7XGE0xT78k'
-  },
-};
+  const options = {
+    method: 'GET',
+    headers: {
+      Authorization: 'Bearer def50200c995507120bd7aff8a0ca9ae41d83a05b561f0ace3055dbf279e99c94b4dca2cba845f8975fb8c5ae39b3dc514a2de1da62bb05b899cfc17e4e3577cfb0d6df8a3ecce821c8f217f2cf38080ead1cb1e7172975e932d209d7db4be56851b303410fa27b5f2b3432c3a3bc36a3d8a8a2f46643223446e6bedf7c59b92d283ed71a2e2ff53b15e21a18ec1d1dde26a2f62da9942ef8dbc75a2fbf783b4f4b64c314365568e7991a8179d93e4ded3adb04434c9da5470afc6b90c260f945837fe83ce535e4202048d8cf3e6e44b70fc9dcb6ca65d617d99f217fafe3a31d1d5384b0268d3c7c7852770aac63e317b8804b9d8d26649f68536aa7a2610c5b2208eea6b790188e1626b8e8a814630c6fa32136297c54ad133d024278d83798b83c9892b4afaf5e7fa7c21a955d239d5bc1e2f893c2beb0137957c4003e74d1e342a2f482e21443b24a29866b7f3385d48638034bfb73ebce5e2a8a0437bd296fe7a589e81f41575a212edbbde49c8f6d6'
+    },
+  };
 
 
   useEffect(() => {
 
     fetch("https://osu.ppy.sh/api/v2/me", options)
-    .then(response => response.json())
-    .then(response => {
-      console.log(response)
-      setUsername(response.username); 
-      setCountry(response.country.name);
-      setRankHistory(response.rankHistory.data)
-    
-    })
-    .catch(err => console.error(err));
+      .then(response => response.json())
+      .then(response => {
+        console.log(response)
+        setUsername(response.username);
+        setCountry(response.country.name);
+        setRankHistory(response.rankHistory.data)
+
+      })
+      .catch(err => console.error(err));
   }, [])
 
-  
+
+  const redirect_get_auth = async (url) => {
+
+  }
+
+
   return (
     <div className={styles.container}>
       <Head>
@@ -45,17 +51,20 @@ const options = {
         <div>
           rank highlight:
           <div>
-            {rankHistory.map(rank => { return (
-              <>
-                <div  key={rank}>{rank}</div>
-              </>
-            )})}
+            {rankHistory.map(rank => {
+              return (
+                <>
+                  <div key={rank}>{rank}</div>
+                </>
+              )
+            })}
           </div>
         </div>
-        </main>
+        <a href="https://osu.ppy.sh/oauth/authorize?client_id=19271&redirect_url=https://osunorway-mathiasgugu.vercel.app/&response_type=code"></a>
+      </main>
 
       <footer className={styles.footer}>
-        
+
       </footer>
     </div>
   )
