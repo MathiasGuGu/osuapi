@@ -16,24 +16,12 @@ export default function Home() {
     
 
     const getBearerToken = async () => {
-      let headers = {
-        "Accept": "application/json",
-        "Content-Type": "application/json",
-    };
-      let body = {
-        "client_id":19271,
-        "client_secret": "aYIYEVy5XEPPoheQHSsKC2HPD6wjBQVfTz39RN6G",
-        "code": "def50200a9839ab8a4be6121a89e48c6c2114cb90362a8505b394d8aafb78d19fec0d056e89e5093e44787ecab2d024f353bef4509bff2066cc64a16327fcacbe08f94f4890477cc02111e020a228cadf6cc74751d16f7cfe9f583b614fffb15312c3772f25690ce3dc1cb01600bf4ac4a812b0cfa8e702e8d1d58360248dc59f44520b13096e2c562bec04d5eb3ee3784f0bc12bffd78d1ff7a8b1df5cd2c4768632da2a0f63fc27cdead41911d249edff91f2c23af36442096963920f0afca37bfc6bea6b824ef427fc9951a5e329a77740e80c1adac1e983a51b68cd62f58dd748be7548cfaf5f2d7b1e0d1d078215422cfa6309f691c157063884fa55b39d2b1addbcad1e4e531b3bf7b72f9ab3be3458ed7af13d60c7807bd8cf1163045a2c89f2455de7c4f7fa4f761755442a29531aa8c06d4a07707f3bf83167b804d00053de0de0a12d078c570535cac5d88a85e92c25acac336880e4ddfddd6586dcc1283e164e7ee9f07262c8b2a7d39dff8e7",
-        "grant_type": "authorization_code",
-        "redirect_uri": "https://osunorway.vercel.app/"
-    }
+
     
 
-
-      let response = await fetch("https://osu.ppy.sh/oauth/token" , {
+      let response = await fetch("http://localhost:3000/api/requestData" , {
         method: "POST", 
-        headers, 
-        body: JSON.stringify(body)
+        body: JSON.stringify({authCode: authCode})
       })
       let data = await response.json()
       console.log(data);
