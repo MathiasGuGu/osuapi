@@ -9,7 +9,7 @@ export default function Home() {
   const [username, setUsername] = useState("")
   const [country, setCountry] = useState("")
   const [rankHistory, setRankHistory] = useState([])
-  const [authCode, setAuthCode] = useState(null)
+  const [authCode, setAuthCode] = useState<any>(null)
   const options = {
     method: 'GET',
     headers: {
