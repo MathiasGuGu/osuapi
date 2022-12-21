@@ -9,7 +9,7 @@ export default function Home() {
   const [username, setUsername] = useState("")
   const [country, setCountry] = useState("")
   const [rankHistory, setRankHistory] = useState([])
-
+  const [authCode, setAuthCode] = useState(null)
   const options = {
     method: 'GET',
     headers: {
@@ -34,14 +34,29 @@ export default function Home() {
 */
 
 
-  const Redirect_get_auth = async () => {
-    const router = useRouter()
-    console.log(router.query)
-  }
+/*
+
+Get the auth token through the params
+save auth token in cookies or storage
+Reset website by pushing a new route (going back to default route)
+use token to get api endpoint response
+display response data
+
+
+*/
+  const router = useRouter()
+
 
   useEffect(() => {
-    Redirect_get_auth()
-  }, [])
+    
+
+    const setAuth = async () => {
+      setAuthCode(String(router.query.code))
+      console.log(authCode);
+    }
+    !authCode & setAuth()
+    
+  }, [router.query, authCode])
 
   return (
     <div className={styles.container}>
