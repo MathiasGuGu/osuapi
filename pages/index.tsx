@@ -60,7 +60,7 @@ export default function Home() {
             })}
           </div>
         </div>
-        <a href="https://osu.ppy.sh/oauth/authorize?client_id=19271&redirect_uri=https://osunorway-mathiasgugu.vercel.app/&response_type=code">
+        <a href="https://osu.ppy.sh/oauth/authorize?client_id=19271&redirect_uri=https://osunorway.vercel.app/&response_type=code">
           Get auth code
         </a>
       </main>
