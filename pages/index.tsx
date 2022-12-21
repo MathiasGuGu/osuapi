@@ -2,6 +2,7 @@ import axios from 'axios';
 import { log } from 'console';
 import Head from 'next/head'
 import Image from 'next/image'
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react'
 import styles from '../styles/Home.module.css'
 export default function Home() {
@@ -30,12 +31,17 @@ export default function Home() {
       })
       .catch(err => console.error(err));
   }, [])
-
-  const redirect_get_auth = async (url) => {
-
-  }
 */
 
+
+  const Redirect_get_auth = async () => {
+    const router = useRouter()
+    console.log(router.query)
+  }
+
+  useEffect(() => {
+    Redirect_get_auth()
+  }, [])
 
   return (
     <div className={styles.container}>
