@@ -57,5 +57,27 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       res.status(404).json({ error: err });
     }
   } else if (req.method === "GET") {
+    let bearer = req.body["bearerToken"];
+    console.log(bearer);
+    const sendData = async () => {
+      try {
+        let response = await fetch("https://osu.ppy.sh/api/v2/me/", {
+          headers: { Authorization: `Bearer ${bearer}` },
+        });
+        let data = await response.json();
+        console.log(data);
+        res.status(200).json({ data });
+      } catch (err) {
+        console.error(err);
+        res.status(401).json({ error: err });
+      }
+    };
+
+    try {
+      sendData();
+    } catch (err) {
+      console.error(err);
+      res.status(404).json({ error: err });
+    }
   }
 }
