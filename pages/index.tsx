@@ -16,7 +16,7 @@ export default function Home() {
     },
   };
 
-
+/* 
   useEffect(() => {
 
     fetch("https://osu.ppy.sh/api/v2/me", options)
@@ -31,10 +31,10 @@ export default function Home() {
       .catch(err => console.error(err));
   }, [])
 
-
   const redirect_get_auth = async (url) => {
 
   }
+*/
 
 
   return (
@@ -60,7 +60,9 @@ export default function Home() {
             })}
           </div>
         </div>
-        <a href="https://osu.ppy.sh/oauth/authorize?client_id=19271&redirect_url=https://osunorway-mathiasgugu.vercel.app/&response_type=code"></a>
+        <a href="https://osu.ppy.sh/oauth/authorize?client_id=19271&redirect_uri=https://osunorway-mathiasgugu.vercel.app/&response_type=code">
+          Get auth code
+        </a>
       </main>
 
       <footer className={styles.footer}>
