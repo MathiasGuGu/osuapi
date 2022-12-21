@@ -54,7 +54,7 @@ display response data
       setAuthCode(String(router.query.code))
       console.log(authCode);
     }
-    !authCode & setAuth()
+    setAuth()
     
   }, [router.query, authCode])
 
