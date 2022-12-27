@@ -16,6 +16,7 @@ export default function Home() {
   const [authCode, setAuthCode] = useState<any>(null);
   const [accessToken, setAccessToken] = useState<any>(null);
 
+  /*
   useEffect(() => {
     const getBearerToken = async () => {
       try {
@@ -39,7 +40,7 @@ export default function Home() {
     getBearerToken();
     const token = localStorage.getItem("accessToken");
   }, [authCode]);
-
+  */
   /*
 
 Get the auth token through the params
