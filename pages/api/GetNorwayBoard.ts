@@ -33,6 +33,7 @@ export default async function handler(
       res.status(200).json({ JSON_DATA });
     } catch (err) {
       console.error(err);
+      res.status(403).json(err);
     }
   }
 }
