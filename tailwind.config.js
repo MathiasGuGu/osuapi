@@ -7,6 +7,7 @@ module.exports = {
   theme: {
     colors: {
       osu_pink: "#eb6aa4",
+      osu_purple: "#5639ac",
       osu_background_dark: "#18171c",
       osu_background_card: "#24222a",
       osu_background_info: "#2e293d",

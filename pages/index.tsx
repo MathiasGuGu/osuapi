@@ -104,7 +104,7 @@ display response data
           {leaderboard?.map((player, index) => {
             return (
               <div
-                className=" rounded shadow-md shadow-osu_background_card w-[70%] h-24 flex gap-12 items-center justify-start bg-osu_background_card "
+                className=" rounded shadow-md text-osu_text_white shadow-osu_background_card w-[70%] h-24 flex gap-12 items-center justify-start bg-osu_background_card "
                 key={player.global_rank}
               >
                 <img
