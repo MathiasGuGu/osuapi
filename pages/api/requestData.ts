@@ -81,3 +81,47 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     }
   }
 }
+/*
+  useEffect(() => {
+    const getBearerToken = async () => {
+      try {
+        let response = await fetch(website_uri + "api/requestData", {
+          method: "POST",
+          body: JSON.stringify({ authCode: authCode }),
+        });
+
+        let data = await response.json();
+        console.log(data);
+
+        setAccessToken(data["access_token"]);
+        data["access_token"] &&
+          localStorage.setItem("accessToken", data["access_token"]);
+        console.log(data["access_token"]);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    getBearerToken();
+    const token = localStorage.getItem("accessToken");
+  }, [authCode]);
+  */
+/*
+
+Get the auth token through the params
+save auth token in cookies or storage
+Reset website by pushing a new route (going back to default route)
+use token to get api endpoint response
+display response data
+
+
+  const router = useRouter();
+
+  useEffect(() => {
+    const setAuth = async () => {
+      setAuthCode(String(router.query.code));
+      console.log(authCode);
+    };
+    setAuth();
+  }, [router.query, authCode]);
+*/

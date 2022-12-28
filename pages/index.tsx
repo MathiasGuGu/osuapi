@@ -12,21 +12,6 @@ const website_uri = "https://osunorway.vercel.app/";
 export default function Home() {
   const [leaderboard, setLeaderboard] = useState<any>([]);
 
-  useEffect(() => {
-    const getLeaderboard = async () => {
-      try {
-        const response = await fetch(
-          "http://localhost:3000/api/GetNorwayBoard"
-        );
-        const data = await response.json();
-        setLeaderboard([...data.JSON_DATA.ranking]);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    getLeaderboard();
-  }, []);
-
   /*
   useEffect(() => {
     const getBearerToken = async () => {
@@ -82,38 +67,7 @@ display response data
       <header>
         <Navbar></Navbar>
       </header>
-      <main className="bg-osu_background_dark w-screen h-auto p-0 m-0">
-        <div className=" w-screen h-auto flex flex-col gap-6 p-6 items-center ">
-          <div className="  bg-osu_background_card h-36 w-[70%] rounded-md gap-6 flex items-center justify-start px-6">
-            <div className="w-32 h-[40%] bg-osu_background_info rounded flex items-center justify-center text-osu_text_white">
-              Global rank
-            </div>
-            <div className="w-32 h-[40%] bg-osu_background_info rounded flex items-center justify-center text-osu_text_white">
-              Global rank
-            </div>
-            <div className="w-32 h-[40%] bg-osu_background_info rounded flex items-center justify-center text-osu_text_white">
-              Global rank
-            </div>
-          </div>
-          {leaderboard?.map((player, index) => {
-            return (
-              <a
-                className=" hover:scale-110 duration-300 hover:cursor-pointer rounded shadow-md text-osu_text_white shadow-osu_background_card w-[70%] h-24 flex gap-12 items-center justify-start bg-osu_background_card "
-                key={player.global_rank}
-                href={"/user/" + player.user.id}
-              >
-                <img
-                  src={player.user.avatar_url}
-                  className=" h-full aspect-square bg-center rounded-l"
-                ></img>
-                <h2>{player.user.username}</h2>
-                <p>global rank: {player.global_rank}</p>
-                <p>ranking in norway: {index + 1}</p>
-              </a>
-            );
-          })}
-        </div>
-      </main>
+      <main className="bg-osu_background_dark w-screen h-screen p-0 m-0"></main>
 
       <footer className={styles.footer}></footer>
     </div>
