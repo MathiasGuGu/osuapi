@@ -9,7 +9,7 @@ import Navbar from "../components/Navbar";
 
 const website_uri = "https://osunorway.vercel.app/";
 
-export default function Home(JSON_DATA) {
+export default function Home(JSON_DATA: any) {
   return (
     <div className={styles.container}>
       <Head>
@@ -33,7 +33,7 @@ export default function Home(JSON_DATA) {
               Global rank
             </div>
           </div>
-          {JSON_DATA["JSON_DATA"].ranking.map((player, index) => {
+          {JSON_DATA["JSON_DATA"].ranking.map((player: any, index: number) => {
             return (
               <a
                 className=" hover:scale-110 duration-300 hover:cursor-pointer rounded shadow-md text-osu_text_white shadow-osu_background_card w-[70%] h-24 flex gap-12 items-center justify-start bg-osu_background_card "
