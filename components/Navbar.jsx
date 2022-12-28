@@ -14,6 +14,9 @@ const Navbar = () => {
         <div className="rounded w-28 h-[80%] flex items-center justify-center hover:cursor-pointer hover:bg-osu_pink duration-300">
           Info
         </div>
+        <a href="https://osu.ppy.sh/oauth/authorize?client_id=19271&redirect_uri=https://osunorway.vercel.app/&response_type=code">
+          Get auth code
+        </a>
       </ul>
     </div>
   );

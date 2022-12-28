@@ -103,9 +103,10 @@ display response data
           </div>
           {leaderboard?.map((player, index) => {
             return (
-              <div
-                className=" rounded shadow-md text-osu_text_white shadow-osu_background_card w-[70%] h-24 flex gap-12 items-center justify-start bg-osu_background_card "
+              <a
+                className=" hover:scale-110 duration-300 hover:cursor-pointer rounded shadow-md text-osu_text_white shadow-osu_background_card w-[70%] h-24 flex gap-12 items-center justify-start bg-osu_background_card "
                 key={player.global_rank}
+                href={"/user/" + player.user.id}
               >
                 <img
                   src={player.user.avatar_url}
@@ -114,13 +115,10 @@ display response data
                 <h2>{player.user.username}</h2>
                 <p>global rank: {player.global_rank}</p>
                 <p>ranking in norway: {index + 1}</p>
-              </div>
+              </a>
             );
           })}
         </div>
-        <a href="https://osu.ppy.sh/oauth/authorize?client_id=19271&redirect_uri=https://osunorway.vercel.app/&response_type=code">
-          Get auth code
-        </a>
       </main>
 
       <footer className={styles.footer}></footer>
