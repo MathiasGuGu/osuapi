@@ -9,8 +9,8 @@ export default async function handler(
 ) {
   if (req.method === "POST") {
     try {
-      console.log(req.body.UserId);
-      const response = await fetch(url + req.body.UserId, {
+      const id = JSON.parse(req.body).id;
+      const response = await fetch(url + id, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${PUBLIC_BEARER}`,
@@ -20,7 +20,6 @@ export default async function handler(
       const user_data = await response.json();
       res.status(200).json({ user_data });
     } catch (err) {
-      console.error(err);
       res.status(403).json({ err });
     }
   }

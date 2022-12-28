@@ -10,12 +10,6 @@ import Navbar from "../components/Navbar";
 const website_uri = "https://osunorway.vercel.app/";
 
 export default function Home() {
-  const [username, setUsername] = useState("");
-  const [country, setCountry] = useState("");
-  const [rankHistory, setRankHistory] = useState([]);
-  const [authCode, setAuthCode] = useState<any>(null);
-  const [accessToken, setAccessToken] = useState<any>(null);
-
   const [leaderboard, setLeaderboard] = useState<any>([]);
 
   useEffect(() => {

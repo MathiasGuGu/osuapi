@@ -25,8 +25,6 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method === "GET") {
-    console.log("Trying to get Data");
-
     try {
       const leaderData = await fetch(url, options);
       const JSON_DATA = await leaderData.json();
