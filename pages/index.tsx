@@ -12,7 +12,7 @@ const website_uri = "https://osunorway.vercel.app/";
 export default function Home() {
   const [leaderboard, setLeaderboard] = useState<any>([]);
 
-  /*
+  /*OLD
   useEffect(() => {
     const getBearerToken = async () => {
       try {
@@ -55,6 +55,12 @@ display response data
     };
     setAuth();
   }, [router.query, authCode]);
+*/
+
+  /*TODO
+make a global store (redux, react storage etc...)
+get bearer token on page load 
+place token in storage and use it for page\
 */
   console.log(leaderboard);
   return (

@@ -33,24 +33,29 @@ export default function Home(JSON_DATA: any) {
               Global rank
             </div>
           </div>
-          {JSON_DATA["JSON_DATA"].ranking.map((player: any, index: number) => {
-            return (
-              <a
-                className=" hover:scale-110 duration-300 hover:cursor-pointer rounded shadow-md text-osu_text_white shadow-osu_background_card w-[70%] h-24 flex gap-12 items-center justify-start bg-osu_background_card "
-                key={player.global_rank}
-                href={"/user/" + player.user.id}
-              >
-                <img
-                  src={player.user.avatar_url}
-                  className=" h-full aspect-square bg-center rounded-l"
-                ></img>
-                <h2>{player.user.username}</h2>
-                <p>global rank: {player.global_rank}</p>
-                <p>ranking in norway: {index + 1}</p>
-              </a>
-            );
-          })}
-          ;
+          {JSON_DATA ? (
+            JSON_DATA["JSON_DATA"].ranking?.map(
+              (player: any, index: number) => {
+                return (
+                  <a
+                    className=" hover:scale-110 duration-300 hover:cursor-pointer rounded shadow-md text-osu_text_white shadow-osu_background_card w-[70%] h-24 flex gap-12 items-center justify-start bg-osu_background_card "
+                    key={player.global_rank}
+                    href={"/user/" + player.user.id}
+                  >
+                    <img
+                      src={player.user.avatar_url}
+                      className=" h-full aspect-square bg-center rounded-l"
+                    ></img>
+                    <h2>{player.user.username}</h2>
+                    <p>global rank: {player.global_rank}</p>
+                    <p>ranking in norway: {index + 1}</p>
+                  </a>
+                );
+              }
+            )
+          ) : (
+            <div> Nothing found </div>
+          )}
         </div>
       </main>
 
