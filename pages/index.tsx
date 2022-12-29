@@ -10,7 +10,14 @@ import Navbar from "../components/Navbar";
 const website_uri = "https://osunorway.vercel.app/";
 
 export default function Home() {
-  const [leaderboard, setLeaderboard] = useState<any>([]);
+  useEffect(() => {
+    const getSessionToken = async () => {
+      const response = await fetch("http://localhost:3000/api/GetSessionToken");
+      const data = await response.json();
+      document.cookie = `bearer=${data.sessionToken}`;
+    };
+    getSessionToken();
+  }, []);
 
   /*OLD
   useEffect(() => {
@@ -58,11 +65,16 @@ display response data
 */
 
   /*TODO
-make a global store (redux, react storage etc...)
+make a global store (redux, react storage etc...) 
+^ session storage
+
+
+
+
 get bearer token on page load 
 place token in storage and use it for page\
 */
-  console.log(leaderboard);
+
   return (
     <div className={styles.container}>
       <Head>
