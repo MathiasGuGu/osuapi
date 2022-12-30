@@ -29,7 +29,7 @@ const UserId = (UserId: any) => {
       <nav>
         <Navbar></Navbar>
       </nav>
-      <main className="w-screen h-auto ">
+      <main className="w-screen h-auto bg-osu_background_dark ">
         <div className="w-full h-96 bg-osu_background_dark flex items-center justify-center">
           <img
             alt="asd"
@@ -40,6 +40,15 @@ const UserId = (UserId: any) => {
             src={UserId["user_data"].cover_url}
             className="w-full h-96 bg-cover absolute"
           />
+          <div className=" z-0 bg-osu_background_card w-96 gap-2 -ml-20 rounded-r-lg h-56 flex flex-col items-center justify-center text-osu_text_white">
+            <h1 className=" text-3xl">{UserId["user_data"].username}</h1>
+            <p>From: {UserId["user_data"].location}</p>
+            <p>Peak rank: {UserId["user_data"].rank_highest.rank}</p>
+            <p>PP: {UserId["user_data"].statistics.pp}</p>
+            <p>
+              Current global rank: {UserId["user_data"].statistics.global_rank}
+            </p>
+          </div>
         </div>
       </main>
       <footer></footer>
