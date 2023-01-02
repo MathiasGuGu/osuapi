@@ -29,7 +29,6 @@ export default function Home(JSON_DATA: any) {
         }),
       });
       const data = await response.json();
-      console.log(data);
       setLeaderboard(data["JSON_DATA"].ranking);
     };
     fetchLeaderboard();
@@ -95,10 +94,10 @@ export default function Home(JSON_DATA: any) {
                     setTypeofPP(e.target.value);
                   }}
                 >
-                  <option defaultValue={"PP"} value="Nomod PP">
+                  <option defaultValue={"PP"} value="All PP">
                     Filter By
                   </option>
-                  <option value="Nomod PP">PP</option>
+                  <option value="All PP">PP</option>
                   <option value="Hidden PP">Hidden PP</option>
                 </select>
                 <select
@@ -117,65 +116,30 @@ export default function Home(JSON_DATA: any) {
               </div>
             </form>
           </div>
-          <div className="w-[70%]">
-            <span
-              id="badge-dismiss-red"
-              className="inline-flex items-center py-4 px-2 mr-2 text-sm font-medium text-red-800 bg-red-100 rounded dark:bg-red-200 dark:text-red-800"
-            >
-              Warning: Hidden PP is not an accurate representation of the
-              players actual hidden PP
-              <button
-                type="button"
-                className="inline-flex items-center p-0.5 ml-2 text-sm text-red-400 bg-transparent rounded-sm hover:bg-red-200 hover:text-red-900 dark:hover:bg-red-300 dark:hover:text-red-900"
-                data-dismiss-target="#badge-dismiss-red"
-                aria-label="Remove"
+          {typeofPP === "Hidden PP" ? (
+            <div className="w-[70%] flex flex-col gap-4">
+              <span
+                id="badge-dismiss-red"
+                className=" w-[80%] inline-flex items-center py-4 px-2 mr-2 text-sm font-medium text-red-800 bg-red-100 rounded dark:bg-red-200 dark:text-red-800"
               >
-                <svg
-                  aria-hidden="true"
-                  className="w-3.5 h-3.5"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
+                Warning: Hidden PP is not an accurate representation of the
+                players actual hidden PP
+              </span>
+              {gamemode === "7k" ? (
+                <span
+                  id="badge-dismiss-red"
+                  className=" w-[50%] inline-flex items-center py-4 px-2 mr-2 text-sm font-medium text-red-800 bg-red-100 rounded dark:bg-red-200 dark:text-red-800"
                 >
-                  <path
-                    fillRule="evenodd"
-                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                    clipRule="evenodd"
-                  ></path>
-                </svg>
-                <span className="sr-only">Remove badge</span>
-              </button>
-            </span>
-          </div>
-          <div className="w-[70%]">
-            <span
-              id="badge-dismiss-red"
-              className="inline-flex items-center py-4 px-2 mr-2 text-sm font-medium text-red-800 bg-red-100 rounded dark:bg-red-200 dark:text-red-800"
-            >
-              Warning: Hidden PP is only available for 4k
-              <button
-                type="button"
-                className="inline-flex items-center p-0.5 ml-2 text-sm text-red-400 bg-transparent rounded-sm hover:bg-red-200 hover:text-red-900 dark:hover:bg-red-300 dark:hover:text-red-900"
-                data-dismiss-target="#badge-dismiss-red"
-                aria-label="Remove"
-              >
-                <svg
-                  aria-hidden="true"
-                  className="w-3.5 h-3.5"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                    clipRule="evenodd"
-                  ></path>
-                </svg>
-                <span className="sr-only">Remove badge</span>
-              </button>
-            </span>
-          </div>
+                  Warning: Hidden PP is only available for 4k
+                </span>
+              ) : (
+                <div></div>
+              )}
+            </div>
+          ) : (
+            <div></div>
+          )}
+
           {JSON_DATA ? (
             leaderboard.map((player: any, index: number) => {
               return (

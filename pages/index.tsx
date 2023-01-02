@@ -6,10 +6,10 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import styles from "../styles/Home.module.css";
 import Navbar from "../components/Navbar";
-
+import Podium from "../components/Podium";
 const website_uri = "https://osunorway.vercel.app/";
 
-export default function Home() {
+export default function Home(data: any) {
   useEffect(() => {
     const getSessionToken = async () => {
       const response = await fetch("http://localhost:3000/api/GetSessionToken");
@@ -85,9 +85,42 @@ place token in storage and use it for page\
       <header>
         <Navbar></Navbar>
       </header>
-      <main className="bg-osu_background_dark w-screen h-screen p-0 m-0"></main>
+      <main className="bg-osu_background_dark w-screen h-screen p-0 m-0 flex flex-col gap-4 items-center justify-center p-5">
+        <Podium></Podium>
+        {data.data["news_posts"] ? (
+          data.data["news_posts"].map((post: any, index: number) => {
+            return (
+              <div
+                className="container w-[70%] h-72 bg-osu_light_gray flex items-center justify-center rounded-lg"
+                key={index}
+              >
+                {post.title}
+              </div>
+            );
+          })
+        ) : (
+          <div>Nothing found</div>
+        )}
+      </main>
 
       <footer className={styles.footer}></footer>
     </div>
   );
+}
+
+export async function getServerSideProps(context: any) {
+  const url = new URL("https://osu.ppy.sh/api/v2/news");
+
+  let headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+  };
+  const response = await fetch(url, { headers });
+  const data = await response.json();
+
+  return {
+    props: {
+      data,
+    },
+  };
 }
