@@ -1,4 +1,7 @@
 /** @type {import('tailwindcss').Config} */
+
+const colors = require("tailwindcss/colors");
+
 module.exports = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx}",
@@ -14,6 +17,10 @@ module.exports = {
       osu_light_gray: "#302e38",
       osu_text_purple: "#8d99d7",
       osu_text_white: "#f9eeda",
+      red: colors.red,
+      green: colors.green,
+      yellow: colors.yellow,
+      blue: colors.blue,
     },
     extend: {},
   },

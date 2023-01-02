@@ -10,6 +10,31 @@ import Navbar from "../components/Navbar";
 const website_uri = "https://osunorway.vercel.app/";
 
 export default function Home(JSON_DATA: any) {
+  const [typeofPP, setTypeofPP] = useState("NoMod");
+  const [gamemode, setGamemode] = useState("4K");
+  const [leaderboard, setLeaderboard] = useState([]);
+
+  useEffect(() => {
+    setLeaderboard(JSON_DATA["JSON_DATA"].ranking);
+  }, [JSON_DATA]);
+
+  useEffect(() => {
+    const fetchLeaderboard = async () => {
+      const response = await fetch("http://localhost:3000/api/GetNorwayBoard", {
+        method: "POST",
+        body: JSON.stringify({
+          variant: gamemode,
+          bearer:
+            "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxOTI3MSIsImp0aSI6ImYwMzUzOTdkYmVlYzBiYmQ1ZTA1NDYzYmEwMWUyOTQ2OWRkMDBlZDY2OGFmNjQ4Y2JjOThkMzJhYWZhNjc1ZGU3ZGU2YjkyZTUyY2YxMTgxIiwiaWF0IjoxNjcyNjc2MzIxLjQ0MDg3NSwibmJmIjoxNjcyNjc2MzIxLjQ0MDg3OCwiZXhwIjoxNjcyNzYxODU5Ljc4MDc0Miwic3ViIjoiIiwic2NvcGVzIjpbInB1YmxpYyJdfQ.GGhwGJnzNZDloDsVJeZqqTAYsmZGr-iivjh7WPDgGbqzbYTRqGC_VnjzJqLikvftwsv4zh2b-gMjJ6Ul817d8kMwJQIaQml4puQQD_kf8EAtk31CQI9essZobBuGT7NIvi_OixYceXe82Ynt0cro7ilLR5jXbIKb20HSe-I8DkpRfJkvKQYyOC9HJWhR05mCHsIpIttjXrHBj0rRGpqK66nvE3v_fE6PVvq1VxD7AbFZFF-kJMbVOaI-LJ3MiuJLBGim2qKKpU7GpdqPVNfayGaDQR_u6xom9JOEokcx9LqrcuchhdXziqTC0C3r61PbwpGWZ4sd_cHw4eYWGyEUT5pCaFadQ5TQA_sZoKFl-RGgCKb0qtyJkihfnZD71JwmIv04GSreTiiXb-GKWOmwBw7QZK6NZE8696Zcon0TtK9ZTNxSTaolXQn9pmQoYTqVKezaIzyDEuzJclwCWXGedc4H6Ni4cSURNOvapezFbLZAvofy7P3Oz4ScALx8BM4OyuxnMS8xUXJ4zpmN1ZpUxzCwGMq6DQbm6bmgk_jxAoI4pR_B4AExDVi2Lpp6kD1nbaAgx__RM26mHBWZCaj-d3h7JuDzmTwuDxlX7QDns40QeHgq4FYuiFfX25MtRLeFPywjT5zvSFALBKp3uRhUZJpeDt9-K4S_4VeNnwAMzEY",
+        }),
+      });
+      const data = await response.json();
+      console.log(data);
+      setLeaderboard(data["JSON_DATA"].ranking);
+    };
+    fetchLeaderboard();
+  }, [typeofPP, gamemode]);
+
   return (
     <div className={styles.container}>
       <Head>
@@ -23,36 +48,158 @@ export default function Home(JSON_DATA: any) {
       <main className="bg-osu_background_dark w-screen h-auto p-0 m-0">
         <div className=" w-screen h-auto flex flex-col gap-6 p-6 items-center ">
           <div className="  bg-osu_background_card h-36 w-[70%] rounded-md gap-6 flex items-center justify-start px-6">
-            <div className="w-32 h-[40%] bg-osu_background_info rounded flex items-center justify-center text-osu_text_white">
-              Global rank
-            </div>
-            <div className="w-32 h-[40%] bg-osu_background_info rounded flex items-center justify-center text-osu_text_white">
-              Global rank
-            </div>
-            <div className="w-32 h-[40%] bg-osu_background_info rounded flex items-center justify-center text-osu_text_white">
-              Global rank
-            </div>
+            <form className="w-full flex flex-col gap-6">
+              <label
+                htmlFor="default-search"
+                className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
+              >
+                Search
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                  <svg
+                    aria-hidden="true"
+                    className="w-5 h-5 text-gray-500 dark:text-gray-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                    ></path>
+                  </svg>
+                </div>
+                <input
+                  type="search"
+                  id="default-search"
+                  className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="Search Players, ranks..."
+                  required
+                />
+                <button
+                  type="submit"
+                  className="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                >
+                  Search
+                </button>
+              </div>
+              <div className="container flex gap-10">
+                <select
+                  id="countries"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[25%] p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  onChange={(e) => {
+                    setTypeofPP(e.target.value);
+                  }}
+                >
+                  <option defaultValue={"PP"} value="Nomod PP">
+                    Filter By
+                  </option>
+                  <option value="Nomod PP">PP</option>
+                  <option value="Hidden PP">Hidden PP</option>
+                </select>
+                <select
+                  id="countries"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[25%] p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  onChange={(e) => {
+                    setGamemode(e.target.value);
+                  }}
+                >
+                  <option defaultValue={"4K"} value={"4k"}>
+                    Mode
+                  </option>
+                  <option value="4k">4K</option>
+                  <option value="7k">7K</option>
+                </select>
+              </div>
+            </form>
+          </div>
+          <div className="w-[70%]">
+            <span
+              id="badge-dismiss-red"
+              className="inline-flex items-center py-4 px-2 mr-2 text-sm font-medium text-red-800 bg-red-100 rounded dark:bg-red-200 dark:text-red-800"
+            >
+              Warning: Hidden PP is not an accurate representation of the
+              players actual hidden PP
+              <button
+                type="button"
+                className="inline-flex items-center p-0.5 ml-2 text-sm text-red-400 bg-transparent rounded-sm hover:bg-red-200 hover:text-red-900 dark:hover:bg-red-300 dark:hover:text-red-900"
+                data-dismiss-target="#badge-dismiss-red"
+                aria-label="Remove"
+              >
+                <svg
+                  aria-hidden="true"
+                  className="w-3.5 h-3.5"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                    clipRule="evenodd"
+                  ></path>
+                </svg>
+                <span className="sr-only">Remove badge</span>
+              </button>
+            </span>
+          </div>
+          <div className="w-[70%]">
+            <span
+              id="badge-dismiss-red"
+              className="inline-flex items-center py-4 px-2 mr-2 text-sm font-medium text-red-800 bg-red-100 rounded dark:bg-red-200 dark:text-red-800"
+            >
+              Warning: Hidden PP is only available for 4k
+              <button
+                type="button"
+                className="inline-flex items-center p-0.5 ml-2 text-sm text-red-400 bg-transparent rounded-sm hover:bg-red-200 hover:text-red-900 dark:hover:bg-red-300 dark:hover:text-red-900"
+                data-dismiss-target="#badge-dismiss-red"
+                aria-label="Remove"
+              >
+                <svg
+                  aria-hidden="true"
+                  className="w-3.5 h-3.5"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                    clipRule="evenodd"
+                  ></path>
+                </svg>
+                <span className="sr-only">Remove badge</span>
+              </button>
+            </span>
           </div>
           {JSON_DATA ? (
-            JSON_DATA["JSON_DATA"].ranking?.map(
-              (player: any, index: number) => {
-                return (
-                  <a
-                    className=" hover:scale-110 duration-300 hover:cursor-pointer rounded shadow-md text-osu_text_white shadow-osu_background_card w-[70%] h-24 flex gap-12 items-center justify-start bg-osu_background_card "
-                    key={player.global_rank}
-                    href={"/user/" + player.user.id}
-                  >
-                    <img
-                      src={player.user.avatar_url}
-                      className=" h-full aspect-square bg-center rounded-l"
-                    ></img>
-                    <h2>{player.user.username}</h2>
-                    <p>global rank: {player.global_rank}</p>
-                    <p>ranking in norway: {index + 1}</p>
-                  </a>
-                );
-              }
-            )
+            leaderboard.map((player: any, index: number) => {
+              return (
+                <a
+                  className=" hover:scale-110 duration-300 hover:cursor-pointer rounded shadow-md text-osu_text_white shadow-osu_background_card w-[70%] h-24 flex gap-12 items-center justify-start bg-osu_background_card "
+                  key={player.global_rank}
+                  href={"/user/" + player.user.id}
+                >
+                  <img
+                    src={player.user.avatar_url}
+                    className=" h-full aspect-square bg-center rounded-l"
+                  ></img>
+                  <h2>{player.user.username}</h2>
+                  <p>global rank: {player.global_rank}</p>
+                  <p>ranking in norway: {index + 1}</p>
+                  <span className="bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">
+                    {gamemode}
+                  </span>
+                  <span className="bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">
+                    {typeofPP}
+                  </span>
+                </a>
+              );
+            })
           ) : (
             <div> Nothing found </div>
           )}
