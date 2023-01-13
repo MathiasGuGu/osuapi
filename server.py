@@ -3,7 +3,7 @@ import time
 from pymongo import MongoClient
 
 
-# TODO connect mongodb to python script to integrate hidden pp system
+# FINISHED connect mongodb to python script to integrate hidden pp system
 client = MongoClient(
     "mongodb+srv://magugu:OafDntjJAsXbesG0@osuapi.7meijyj.mongodb.net/?retryWrites=true&w=majority")
 
