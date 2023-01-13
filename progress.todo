@@ -1,1 +1,29 @@
-[wasted]
+Python database:
+    ☐ Seperate all scores into different pp groups
+    ☐ use RegEx to filter maps to find 4k and 7k maps
+    ☐ Store all user data in mongoDB store 
+
+Api Connection:
+    ☐ Connect website to MongoDB to get leaderboard data
+
+Leaderboard filtering:
+    ☐ Seperate filter into different PP systems
+    ☐ Fetch leaderboard data and use Filter() to get needed data
+
+Leaderboard design:
+    ☐ Create responsive filtering header
+    ☐ Custom dropdown for filtering methods
+    ☐ Searchbar responsiveness
+
+Cookies:
+    ☐ Add lifetime to bearer cookie @critical
+    ☐ Get cookie on all pages. Check if cookie already exists. @critical
+
+User page:
+    ☐ Add rank graph
+    ☐ Add PP graph with different bars for different pp types
+    ☐ Freshen up user hero section
+
+Main design:
+    ☐ Design footer
+    ☐ Introduce purpose of webapp in index
