@@ -1,5 +1,6 @@
 import requests
 import time
+import re
 from pymongo import MongoClient
 
 
@@ -10,8 +11,7 @@ client = MongoClient(
 db = client["osuapi"]
 collection = db["leaderboard"]
 
-
-bearer = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxOTI3MSIsImp0aSI6IjZmYjM0NDhmNjExYzMwZDAxZTBkYmE4Y2RjZjNmYmRhMTMzMGQ4ZWQ1MTZkZmI2YTFkMjcyNTZmMTUyYzcyNmIyNzBmYmU5MGVhMjlmMDNhIiwiaWF0IjoxNjczNDI1MjY1LjA2OTMwNCwibmJmIjoxNjczNDI1MjY1LjA2OTMwOCwiZXhwIjoxNjczNTExNjY1LjA2Mjk5Mywic3ViIjoiIiwic2NvcGVzIjpbInB1YmxpYyJdfQ.IYGyr7xK21xL7fTfTrH1xvU3YgblZcRReElKRO-2_X4kFiI4BBme10xcM-vuViV0lCyXMG0htXMkvG8iRFGKRTKV47cO1NIOV3c4pvTic2EjaX0JiN-DWvaonw2aEBqJ4IMv7jn8cAoav_67dw2I2bTvklbSPeeMU9CoZlzfDiBUI5KNXE0PnRcOusDIk4PDK5SvzAPL3cCCeyTh07TKbZ3bFhua2EbGzbzUKBdO5KLzweHCyRGILpflwcdhH7wcWhfoSg1X8bnCZpNC6ADcUmGadbtqiDBT6L345kBGLhFUi00QUPneQWQhIWTJ6p5Npdev07NiXri1euLvxemr3LT9q2sAhlavGOUh_v7SItCAmyMeumvxqGiOFw5VyfZpjxMazxh12bhAIakYovn0M-t0YtQIKaJis-leUIghf7c9TknPDr1rO4IitGbe0U8T_BDas5TRJf7dnscUHqqeqhtcgXUP9NPW0hPNOqTA4akwfOKDB2RdhHjsfqhrv_rRcXscB0z1lu5qBpEUbKRmwGNIZQJv6ylZrIj6oln3CuvzHm2xkNe8D2t4D-ccJcSBzNwgSY86sZ_iS6lJZxfQ3eRGya4_Fn_gm8apPJyeZaAEEBPFk92Llfu-B8f6EMTaDxlz3iiN5zG1TKMjTeH3Mf7G64oOas6TvZ4gTK8lmz4"
+bearer = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxOTI3MSIsImp0aSI6IjFkMDc4ZjMxNjVlOGYzYjUxZGQyYTM3OTFhNmIzMjhhZWIzMzYzNmE0ZmFkNjFiODE1NTlmMTEzMDU3ZmU3Y2ZhZGI5NGZmMWYxZmYwMzE2IiwiaWF0IjoxNjczNjA5Mzk2LjEzMDE3NiwibmJmIjoxNjczNjA5Mzk2LjEzMDE3OSwiZXhwIjoxNjczNjk1Nzk2LjEyNTEwOCwic3ViIjoiIiwic2NvcGVzIjpbInB1YmxpYyJdfQ.Mj2CJSkyuqxhCvaFxLIXvbF83m_8z9d9VhTZSw6_vPk85TO89NIQ965pboN9VXKKCtHXeuu_WlPwfaThLrhn7ANhVqOFw-Ec70pN_7ijHpIMZmqjPIiqFt0TJTFsZTeR6OdBcuNRCOebbPZ8-TjCdLZvEjaywoO_rLsx6H3cc-1EgRrljK3oVshvTz0cYRyDNhEBk6FMUMBT1SM0CjL0RDQvnfKrqPu-TYd1OgPNeG-vVehVvPUPpULYjOyd5m9O56o7n_4iX9YwwWWhxTlmkd1jZE1Q1QibmJOCt4kel_2vwF-QlanOICgGcwhsL-jiWRgUdTMmrLZJnMbr8DeH7xbOktq4tAB_dJWIzpUMnB97GI4Oxwg2ymjH1ys1D6YJYoqI_dEePQZNt-TQAga1XgMd0dXj6ZrnrM-E-wbgl9Bp79n0aKPmqmZ98WDzy1bG_OJ3inKrx8Uxa8Rxfa6XS-iaRMpQNpOpMN2kmnFeoqudS86WTSrZFseq8DkFejXtWo9sfkYVHSdoF3OIt9ZKOZAfxUx5kJXbTsiPIMPwDh6AWfrBLxBI0N761myeLZ7MSsKNrOh9UMREfyJyXREuXK0dELDe_0dDepq0zgQ7SO8LP-7dFNoZTS7cPT5cHpPS_BMVncc6KZJd1sMwGC5xoQWoRzcywpHlpFB4lChyqNk"
 
 UserHDScoresURI = "http://localhost:3000/api/GetUserHDScore"
 GetUserBestScoresURI = "https://osu.ppy.sh/api/v2/users/${user}/scores/best"
@@ -27,7 +27,6 @@ player_ids = []
 
 local_store = {}
 hiddenPP_store = {}
-x = 0
 for player in leaderboard:
     player_ids.append(player["user"]["id"])
     players.append(player)
@@ -51,21 +50,50 @@ def getUserHDScores():
 
 for id in player_ids:
     local_store[str(id)] = getUserBestScores(id)
-    for x in range(limit):
 
-        if "HD" in local_store[str(id)][x]["mods"]:
-            if (local_store[str(id)][x]["user"]["username"]) in hiddenPP_store:
+
+for id in player_ids:
+    # Get top user plays
+    local_store[str(id)] = getUserBestScores(id)
+
+    # for each map
+    for x in range(limit):
+        if local_store[str(id)][x]["user"]["username"] in hiddenPP_store:
+            pass
+        else:
+            print("creating user" + " " +
+                  local_store[str(id)][x]["user"]["username"])
+            hiddenPP_store[local_store[str(id)][x]["user"]["username"]] = {
+                "PP": {"HD": {"4K": 0, "7K": 0}, "Total": {"4K": 0, "7K": 0}}}
+
+       # localstore[str(id)][x] is the current map in the cycle
+       # if the map has hidden applied
+        if re.search("7K", local_store[str(id)][x]["beatmap"]["version"]):
+
+            if "HD" in local_store[str(id)][x]["mods"]:
+                print("matching 7k + HD")
+
                 hiddenPP_store[local_store[str(
-                    id)][x]["user"]["username"]] += local_store[str(id)][x]["pp"]
-            else:
+                    id)][x]["user"]["username"]]["PP"]["HD"]["7K"] += local_store[str(id)][x]["pp"]
+            hiddenPP_store[local_store[str(
+                id)][x]["user"]["username"]]["PP"]["Total"]["7K"] += local_store[str(id)][x]["pp"]
+            # check if map is 4k
+
+        if re.search("4K", local_store[f"{str(id)}"][x]["beatmap"]["version"]):
+            if "HD" in local_store[str(id)][x]["mods"]:
+                print("matching 4k + HD")
                 hiddenPP_store[local_store[str(
-                    id)][x]["user"]["username"]] = local_store[str(id)][x]["pp"]
+                    id)][x]["user"]["username"]]["PP"]["HD"]["4K"] += local_store[str(id)][x]["pp"]
+            hiddenPP_store[local_store[str(
+                id)][x]["user"]["username"]]["PP"]["Total"]["4K"] += local_store[str(id)][x]["pp"]
 
 print(hiddenPP_store)
 
-for item in hiddenPP_store.keys():
-    collection.insert_one(
-        {"username": item, "hidden_pp": hiddenPP_store[item]})
+
+# TODO Undo comment, insert data into more readable object notation
+# for item in hiddenPP_store.keys():
+#   collection.insert_one(
+#      {"username": item, "hidden_pp": hiddenPP_store[item]})
 
 # for player in local_store:
 

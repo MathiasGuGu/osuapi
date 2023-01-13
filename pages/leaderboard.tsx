@@ -8,7 +8,15 @@ import styles from '../styles/Home.module.css';
 import Navbar from '../components/Navbar';
 
 const website_uri = 'https://osunorway.vercel.app/';
-
+function str_obj(str) {
+	str = str.split(', ');
+	var result = {};
+	for (var i = 0; i < str.length; i++) {
+		var cur = str[i].split('=');
+		result[cur[0]] = cur[1];
+	}
+	return result;
+}
 export default function Home(JSON_DATA: any) {
 	const [typeofPP, setTypeofPP] = useState('NoMod');
 	const [gamemode, setGamemode] = useState('4K');
@@ -18,21 +26,25 @@ export default function Home(JSON_DATA: any) {
 		setLeaderboard(JSON_DATA['JSON_DATA'].ranking);
 	}, [JSON_DATA]);
 
-	const fetchLeaderboard = async () => {
-		const response = await fetch(
-			'http://localhost:3000/api/GetNorwayBoard',
-			{
-				method: 'POST',
-				body: JSON.stringify({
-					variant: gamemode,
-					bearer: cookies.bearer,
-				}),
-			}
-		);
-		const data = await response.json();
-		setLeaderboard(data['JSON_DATA'].ranking);
-	};
-	fetchLeaderboard();
+	useEffect(() => {
+		const fetchLeaderboard = async () => {
+			let cookie = str_obj(document.cookie);
+			const response = await fetch(
+				'http://localhost:3000/api/GetNorwayBoard',
+				{
+					method: 'POST',
+					body: JSON.stringify({
+						variant: gamemode,
+						bearer: cookie['bearer'],
+					}),
+				}
+			);
+			const data = await response.json();
+
+			setLeaderboard(data['JSON_DATA'].ranking);
+		};
+		fetchLeaderboard();
+	}, [gamemode]);
 
 	return (
 		<div className={styles.container}>
@@ -92,10 +104,12 @@ export default function Home(JSON_DATA: any) {
 									onChange={(e) => {
 										setTypeofPP(e.target.value);
 									}}>
-									<option defaultValue={'PP'} value='All PP'>
+									<option
+										defaultValue={'Total PP'}
+										value='Total PP'>
 										Filter By
 									</option>
-									<option value='All PP'>PP</option>
+									<option value='Total PP'>Total PP</option>
 									<option value='Hidden PP'>Hidden PP</option>
 								</select>
 								<select
