@@ -1,12 +1,10 @@
-import axios from 'axios';
-import { log } from 'console';
 import Head from 'next/head';
-import Image from 'next/image';
-import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import styles from '../styles/Home.module.css';
 import Navbar from '../components/Navbar';
-
+import LeaderboardCard from '../components/LeaderboardCard';
+import LeaderboardFilter from '../components/LeaderboardFilter';
+import WarningCard from '../components/WarningCard';
 const website_uri = 'https://osunorway.vercel.app/';
 function str_obj(str) {
 	str = str.split(', ');
@@ -61,113 +59,25 @@ export default function Home(JSON_DATA: any) {
 			</header>
 			<main className='bg-osu_background_dark w-screen h-auto p-0 m-0'>
 				<div className=' w-screen h-auto flex flex-col gap-6 p-6 items-center '>
-					<div className='  bg-osu_background_card h-36 w-[70%] rounded-md gap-6 flex items-center justify-start px-6'>
-						<form className='w-full flex flex-col gap-6'>
-							<label
-								htmlFor='default-search'
-								className='mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white'>
-								Search
-							</label>
-							<div className='relative'>
-								<div className='absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none'>
-									<svg
-										aria-hidden='true'
-										className='w-5 h-5 text-gray-500 dark:text-gray-400'
-										fill='none'
-										stroke='currentColor'
-										viewBox='0 0 24 24'
-										xmlns='http://www.w3.org/2000/svg'>
-										<path
-											strokeLinecap='round'
-											strokeLinejoin='round'
-											strokeWidth='2'
-											d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'></path>
-									</svg>
-								</div>
-								<input
-									type='search'
-									id='default-search'
-									className='block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-									placeholder='Search Players, ranks...'
-									required
-								/>
-								<button
-									type='submit'
-									className='text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'>
-									Search
-								</button>
-							</div>
-							<div className='container flex gap-10'>
-								<select
-									id='countries'
-									className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[25%] p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-									onChange={(e) => {
-										setTypeofPP(e.target.value);
-									}}>
-									<option
-										defaultValue={'Total PP'}
-										value='Total PP'>
-										Filter By
-									</option>
-									<option value='Total PP'>Total PP</option>
-									<option value='Hidden PP'>Hidden PP</option>
-								</select>
-								<select
-									id='countries'
-									className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[25%] p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-									onChange={(e) => {
-										setGamemode(e.target.value);
-									}}>
-									<option defaultValue={'4K'} value={'4k'}>
-										Mode
-									</option>
-									<option value='4k'>4K</option>
-									<option value='7k'>7K</option>
-								</select>
-							</div>
-						</form>
-					</div>
-					{typeofPP === 'Hidden PP' ? (
-						<div className='w-[70%] flex flex-col gap-4'>
-							<span
-								id='badge-dismiss-red'
-								className=' w-[80%] inline-flex items-center py-4 px-2 mr-2 text-sm font-medium text-red-800 bg-red-100 rounded dark:bg-red-200 dark:text-red-800'>
-								Warning: Hidden PP is not an accurate
-								representation of the players actual hidden PP
-							</span>
-							{gamemode === '7k' ? (
-								<span
-									id='badge-dismiss-red'
-									className=' w-[50%] inline-flex items-center py-4 px-2 mr-2 text-sm font-medium text-red-800 bg-red-100 rounded dark:bg-red-200 dark:text-red-800'>
-									Warning: Hidden PP is only available for 4k
-								</span>
-							) : (
-								<div></div>
-							)}
-						</div>
-					) : (
-						<div></div>
-					)}
+					<LeaderboardFilter
+						setGamemode={setGamemode}
+						setTypeofPP={setTypeofPP}></LeaderboardFilter>
+					<WarningCard gamemode={gamemode} typeOfPP={typeofPP}>
+						Warning: Hidden PP is not an accurate representation of
+						the players actual hidden PP
+					</WarningCard>
 
 					{leaderboard.map((player: any, index: number) => {
 						return (
-							<a
-								className=' hover:scale-110 duration-300 hover:cursor-pointer rounded shadow-md text-osu_text_white shadow-osu_background_card w-[70%] h-24 flex gap-12 items-center justify-start bg-osu_background_card '
-								key={player.global_rank}
-								href={'/user/' + player.user.id}>
-								<img
-									src={player.user.avatar_url}
-									className=' h-full aspect-square bg-center rounded-l'></img>
-								<h2>{player.user.username}</h2>
-								<p>global rank: {player.global_rank}</p>
-								<p>ranking in norway: {index + 1}</p>
-								<span className='bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800'>
-									{gamemode}
-								</span>
-								<span className='bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800'>
-									{typeofPP}
-								</span>
-							</a>
+							<LeaderboardCard
+								key={player.user.id}
+								global_rank={player.global_rank}
+								userId={player.user.id}
+								username={player.user.username}
+								avatar={player.user.avatar_url}
+								gamemode={gamemode}
+								typeofPP={typeofPP}
+								index={index}></LeaderboardCard>
 						);
 					})}
 				</div>

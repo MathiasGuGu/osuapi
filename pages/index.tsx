@@ -8,19 +8,10 @@ import styles from '../styles/Home.module.css';
 import Navbar from '../components/Navbar';
 import Podium from '../components/Podium';
 const website_uri = 'https://osunorway.vercel.app/';
-function str_obj(str) {
-	str = str.split(', ');
-	var result = {};
-	for (var i = 0; i < str.length; i++) {
-		var cur = str[i].split('=');
-		result[cur[0]] = cur[1];
-	}
-	return result;
-}
+
 export default function Home(data: any) {
 	useEffect(() => {
 		const getSessionToken = async () => {
-			let cookie = str_obj(document.cookie);
 			const response = await fetch(
 				'http://localhost:3000/api/GetSessionToken'
 			);

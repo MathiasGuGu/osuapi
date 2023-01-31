@@ -1,6 +1,6 @@
 Python database:
     ☐ Seperate all scores into different pp groups
-    ☐ use RegEx to filter maps to find 4k and 7k maps
+    ☐ use RegEx to filter maps to find 4k and 7k maps (\[4k\]: is the regex for matching pattern)
     ☐ Store all user data in mongoDB store 
 
 Api Connection:
