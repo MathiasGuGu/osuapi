@@ -19,6 +19,8 @@ export default function Home(JSON_DATA: any) {
 	const [typeofPP, setTypeofPP] = useState('NoMod');
 	const [gamemode, setGamemode] = useState('4K');
 	const [leaderboard, setLeaderboard] = useState([]);
+	const [filterLeaderboard, setFilterLeaderboard] = useState([]);
+	const [searchInput, setSearchInput] = useState('');
 
 	useEffect(() => {
 		setLeaderboard(JSON_DATA['JSON_DATA'].ranking);
@@ -40,9 +42,21 @@ export default function Home(JSON_DATA: any) {
 			const data = await response.json();
 
 			setLeaderboard(data['JSON_DATA'].ranking);
+			setFilterLeaderboard(data['JSON_DATA'].ranking);
 		};
 		fetchLeaderboard();
 	}, [gamemode]);
+
+	useEffect(() => {
+		setFilterLeaderboard(
+			leaderboard.filter((player) => {
+				return player.user.username.toLowerCase().includes(searchInput);
+			})
+		);
+		return () => {
+			setFilterLeaderboard(leaderboard);
+		};
+	}, [searchInput]);
 
 	return (
 		<div className={styles.container}>
@@ -60,6 +74,7 @@ export default function Home(JSON_DATA: any) {
 			<main className='bg-osu_background_dark w-screen h-auto p-0 m-0'>
 				<div className=' w-screen h-auto flex flex-col gap-6 p-6 items-center '>
 					<LeaderboardFilter
+						setSearchInput={setSearchInput}
 						setGamemode={setGamemode}
 						setTypeofPP={setTypeofPP}></LeaderboardFilter>
 					<WarningCard gamemode={gamemode} typeOfPP={typeofPP}>
@@ -67,7 +82,7 @@ export default function Home(JSON_DATA: any) {
 						the players actual hidden PP
 					</WarningCard>
 
-					{leaderboard.map((player: any, index: number) => {
+					{filterLeaderboard.map((player: any, index: number) => {
 						return (
 							<LeaderboardCard
 								key={player.user.id}

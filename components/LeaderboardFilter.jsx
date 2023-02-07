@@ -1,6 +1,11 @@
 import React from 'react';
+const _ = require('lodash');
+const LeaderboardFilter = ({ setGamemode, setTypeofPP, setSearchInput }) => {
+	const debounceSearch = (e) => {
+		console.log(e);
+		setSearchInput(e);
+	};
 
-const LeaderboardFilter = ({ setGamemode, setTypeofPP }) => {
 	return (
 		<div className='  bg-osu_background_card h-36 lg:w-[70%] w-[100%] rounded-md gap-6 flex items-center justify-start px-6'>
 			<form className='w-full flex flex-col gap-6'>
@@ -26,6 +31,9 @@ const LeaderboardFilter = ({ setGamemode, setTypeofPP }) => {
 						</svg>
 					</div>
 					<input
+						onChange={(e) => {
+							debounceSearch(e.target.value);
+						}}
 						type='search'
 						id='default-search'
 						className='block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
