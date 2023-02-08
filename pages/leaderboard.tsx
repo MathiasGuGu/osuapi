@@ -25,7 +25,6 @@ export default function Home() {
   const [searchInput, setSearchInput] = useState("");
 
   useEffect(() => {
-    console.log(typeofPP);
     if (typeofPP === "Hidden PP") {
       (async function fetchHiddenLeaderboard() {
         let cookie = str_obj(document.cookie);
@@ -108,6 +107,17 @@ export default function Home() {
               players actual hidden PP
             </WarningCard>
             {typeofPP === "Hidden PP" ? <Infobox></Infobox> : <div></div>}
+          </div>
+          <div className="flex gap-4 items-center justify-between px-8 w-[70%] bg-osu_background_card">
+            <p>-1</p>
+            <h2>[RS] Mart</h2>
+            <div className="flex gap-8 p-6 rounded-md">
+              <p>4k:</p>
+              INFINITE
+            </div>
+            <div className="flex gap-8  p-6 rounded-md">
+              <p>7k:</p>0 :P
+            </div>
           </div>
           {typeofPP === "Total PP"
             ? filterLeaderboard.map((player: any, index: number) => {

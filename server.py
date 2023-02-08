@@ -85,9 +85,9 @@ for id in player_ids:
                 # print("matching 7k + HD")
 
                 hiddenPP_store[local_store[str(
-                    id)][x]["user"]["username"]]["PP"]["HD"]["7K"] += local_store[str(id)][x]["pp"]
+                    id)][x]["user"]["username"]]["PP"]["HD"]["7K"] += local_store[str(id)][x]["pp"] * (0.95 ^ (x - 1))
             hiddenPP_store[local_store[str(
-                id)][x]["user"]["username"]]["PP"]["Total"]["7K"] += local_store[str(id)][x]["pp"]
+                id)][x]["user"]["username"]]["PP"]["Total"]["7K"] += local_store[str(id)][x]["pp"] * (0.95 ^ (x - 1))
 
         # check if map is 4k
 
@@ -110,3 +110,6 @@ print(hiddenPP_store)
 # for player in local_store:
 
 # print(player[0]["best_id"])
+
+
+# TODO create function that runs every 60 minutes and checks recent plays

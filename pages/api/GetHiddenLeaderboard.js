@@ -4,7 +4,6 @@ import clientPromise from "../../lib/mongodb";
 export default async function handler(req, res) {
   try {
     const client = await clientPromise;
-    console.log(client);
     const db = client.db("osuapi");
     const collection = await db
       .collection("leaderboard")
