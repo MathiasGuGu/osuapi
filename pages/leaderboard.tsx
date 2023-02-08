@@ -15,16 +15,12 @@ function str_obj(str) {
 	}
 	return result;
 }
-export default function Home(JSON_DATA: any) {
+export default function Home() {
 	const [typeofPP, setTypeofPP] = useState('NoMod');
 	const [gamemode, setGamemode] = useState('4K');
 	const [leaderboard, setLeaderboard] = useState([]);
 	const [filterLeaderboard, setFilterLeaderboard] = useState([]);
 	const [searchInput, setSearchInput] = useState('');
-
-	useEffect(() => {
-		setLeaderboard(JSON_DATA['JSON_DATA'].ranking);
-	}, [JSON_DATA]);
 
 	useEffect(() => {
 		const fetchLeaderboard = async () => {
@@ -85,6 +81,7 @@ export default function Home(JSON_DATA: any) {
 					{filterLeaderboard.map((player: any, index: number) => {
 						return (
 							<LeaderboardCard
+								placement={Math.floor(Math.random() * 2)}
 								key={player.user.id}
 								global_rank={player.global_rank}
 								userId={player.user.id}

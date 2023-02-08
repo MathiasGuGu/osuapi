@@ -7,9 +7,11 @@ import { useEffect, useState } from 'react';
 import styles from '../styles/Home.module.css';
 import Navbar from '../components/Navbar';
 import Podium from '../components/Podium';
+import News from '../components/News';
 const website_uri = 'https://osunorway.vercel.app/';
 
 export default function Home(data: any) {
+	console.log(data);
 	useEffect(() => {
 		const getSessionToken = async () => {
 			const response = await fetch(
@@ -92,21 +94,12 @@ place token in storage and use it for page\
 			<header>
 				<Navbar></Navbar>
 			</header>
-			<main className='bg-osu_background_dark w-screen h-screen p-0 m-0 flex flex-col gap-4 items-center justify-center p-5'>
-				<Podium></Podium>
-				{data.data['news_posts'] ? (
-					data.data['news_posts'].map((post: any, index: number) => {
-						return (
-							<div
-								className='container w-[70%] h-72 bg-osu_light_gray flex items-center justify-center rounded-lg'
-								key={index}>
-								{post.title}
-							</div>
-						);
-					})
-				) : (
-					<div>Nothing found</div>
-				)}
+			<main className='bg-osu_background_dark w-screen min-h-screen m-0 flex flex-col '>
+				<Podium
+					one={data.data.ranking[0].user}
+					two={data.data.ranking[1].user}
+					three={data.data.ranking[2].user}></Podium>
+				<News></News>
 			</main>
 
 			<footer className={styles.footer}></footer>
@@ -114,16 +107,29 @@ place token in storage and use it for page\
 	);
 }
 
-export async function getServerSideProps(context: any) {
-	const url = new URL('https://osu.ppy.sh/api/v2/news');
+export async function getServerSideProps({ req, res }: any) {
+	const url = new URL('https://osu.ppy.sh/api/v2/rankings/mania/performance');
 
-	let headers = {
-		'Content-Type': 'application/json',
-		Accept: 'application/json',
+	let params: any = {
+		country: 'NO',
+		filter: 'all',
 	};
-	const response = await fetch(url, { headers });
-	const data = await response.json();
+	Object.keys(params).forEach((key) =>
+		url.searchParams.append(key, params[key])
+	);
 
+	const PUBLIC_BEARER = req.cookies.bearer;
+	const options = {
+		method: 'GET',
+		headers: {
+			Authorization: `Bearer ${PUBLIC_BEARER}`,
+			'Content-Type': 'application/json',
+		},
+	};
+
+	const leaderData = await fetch(url, options);
+	const data = await leaderData.json();
+	console.log(data.ranking[0].user);
 	return {
 		props: {
 			data,

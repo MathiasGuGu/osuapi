@@ -14,6 +14,8 @@ Leaderboard design:
     ☐ Create responsive filtering header
     ☐ Custom dropdown for filtering methods
     ☐ Searchbar responsiveness
+    ☐ Norwegian rank needs to be saved and not show index in list
+
 
 Cookies:
     ☐ Add lifetime to bearer cookie @critical

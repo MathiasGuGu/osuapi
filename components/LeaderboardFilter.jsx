@@ -2,7 +2,6 @@ import React from 'react';
 const _ = require('lodash');
 const LeaderboardFilter = ({ setGamemode, setTypeofPP, setSearchInput }) => {
 	const debounceSearch = (e) => {
-		console.log(e);
 		setSearchInput(e);
 	};
 
@@ -40,11 +39,6 @@ const LeaderboardFilter = ({ setGamemode, setTypeofPP, setSearchInput }) => {
 						placeholder='Search Players, ranks...'
 						required
 					/>
-					<button
-						type='submit'
-						className='text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'>
-						Search
-					</button>
 				</div>
 				<div className='container flex gap-10'>
 					<select
@@ -57,13 +51,19 @@ const LeaderboardFilter = ({ setGamemode, setTypeofPP, setSearchInput }) => {
 						<option value='Hidden PP'>Hidden PP</option>
 					</select>
 					<select
-						id='countries'
+						id='gamemode'
 						className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[25%] p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
 						onChange={(e) => {
 							setGamemode(e.target.value);
 						}}>
 						<option value='4k'>4K</option>
 						<option value='7k'>7K</option>
+					</select>
+					<select
+						id='ranking'
+						className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[25%] p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'>
+						<option value='4k'>1 - 50</option>
+						<option value='7k'>50 -</option>
 					</select>
 				</div>
 			</form>
