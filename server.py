@@ -35,7 +35,9 @@ for player in leaderboard:
     player_ids.append(player["user"]["id"])
     players.append(player)
 
-limit = 50
+limit = 10
+
+# TODO use formula `Total pp = p * 0.95^(n-1) (p: Total PP, n: place on top plays ladder)`
 
 
 def getUserBestScores(id):
@@ -75,10 +77,12 @@ for id in player_ids:
 
        # localstore[str(id)][x] is the current map in the cycle
        # if the map has hidden applied
+        weighted_pp = local_store[str(id)][x]["pp"] * (0.95 ^ (x - 1))
+        print("weighted PP : " + weighted_pp)
         if re.search("7K", local_store[str(id)][x]["beatmap"]["version"]):
 
             if "HD" in local_store[str(id)][x]["mods"]:
-                print("matching 7k + HD")
+                # print("matching 7k + HD")
 
                 hiddenPP_store[local_store[str(
                     id)][x]["user"]["username"]]["PP"]["HD"]["7K"] += local_store[str(id)][x]["pp"]
@@ -89,7 +93,7 @@ for id in player_ids:
 
         if re.search("4K", local_store[f"{str(id)}"][x]["beatmap"]["version"]):
             if "HD" in local_store[str(id)][x]["mods"]:
-                print("matching 4k + HD")
+                # print("matching 4k + HD")
                 hiddenPP_store[local_store[str(
                     id)][x]["user"]["username"]]["PP"]["HD"]["4K"] += local_store[str(id)][x]["pp"]
             hiddenPP_store[local_store[str(
@@ -99,9 +103,9 @@ print(hiddenPP_store)
 
 
 # TODO Undo comment, insert data into more readable object notation
-for item in hiddenPP_store.keys():
-    collection.insert_one(
-        {"username": item, "hidden_pp": hiddenPP_store[item]})
+# for item in hiddenPP_store.keys():
+#    collection.insert_one(
+#        {"username": item, "hidden_pp": hiddenPP_store[item]})
 
 # for player in local_store:
 
