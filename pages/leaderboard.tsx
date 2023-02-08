@@ -5,6 +5,7 @@ import Navbar from '../components/Navbar';
 import LeaderboardCard from '../components/LeaderboardCard';
 import LeaderboardFilter from '../components/LeaderboardFilter';
 import WarningCard from '../components/WarningCard';
+import Infobox from '../components/Infobox';
 const website_uri = 'https://osunorway.vercel.app/';
 function str_obj(str) {
 	str = str.split(', ');
@@ -19,10 +20,36 @@ export default function Home() {
 	const [typeofPP, setTypeofPP] = useState('NoMod');
 	const [gamemode, setGamemode] = useState('4K');
 	const [leaderboard, setLeaderboard] = useState([]);
+	const [hiddenLeaderboard, setHiddenLeaderboard] = useState([]);
 	const [filterLeaderboard, setFilterLeaderboard] = useState([]);
 	const [searchInput, setSearchInput] = useState('');
 
 	useEffect(() => {
+		console.log(typeofPP);
+		if (typeofPP === 'Hidden PP') {
+			(async function fetchHiddenLeaderboard() {
+				let cookie = str_obj(document.cookie);
+				const response = await fetch(
+					'http://localhost:3000/api/GetHiddenLeaderboard',
+					{
+						method: 'POST',
+						body: JSON.stringify({
+							variant: gamemode,
+							bearer: cookie['bearer'],
+						}),
+					}
+				);
+				const data = await response.json();
+				const sorted_data = data.collection.sort((a, b) => {
+					return (
+						b.hidden_pp['PP']['HD']['4K'] -
+						a.hidden_pp['PP']['HD']['4K']
+					);
+				});
+				console.log(sorted_data);
+				setHiddenLeaderboard([...sorted_data]);
+			})();
+		}
 		const fetchLeaderboard = async () => {
 			let cookie = str_obj(document.cookie);
 			const response = await fetch(
@@ -41,7 +68,7 @@ export default function Home() {
 			setFilterLeaderboard(data['JSON_DATA'].ranking);
 		};
 		fetchLeaderboard();
-	}, [gamemode]);
+	}, [gamemode, typeofPP]);
 
 	useEffect(() => {
 		setFilterLeaderboard(
@@ -73,25 +100,53 @@ export default function Home() {
 						setSearchInput={setSearchInput}
 						setGamemode={setGamemode}
 						setTypeofPP={setTypeofPP}></LeaderboardFilter>
-					<WarningCard gamemode={gamemode} typeOfPP={typeofPP}>
-						Warning: Hidden PP is not an accurate representation of
-						the players actual hidden PP
-					</WarningCard>
-
-					{filterLeaderboard.map((player: any, index: number) => {
-						return (
-							<LeaderboardCard
-								placement={Math.floor(Math.random() * 2)}
-								key={player.user.id}
-								global_rank={player.global_rank}
-								userId={player.user.id}
-								username={player.user.username}
-								avatar={player.user.avatar_url}
-								gamemode={gamemode}
-								typeofPP={typeofPP}
-								index={index}></LeaderboardCard>
-						);
-					})}
+					<div className=' flex items-center justify-start w-[70%]'>
+						<WarningCard gamemode={gamemode} typeOfPP={typeofPP}>
+							Warning: Hidden PP is not an accurate representation
+							of the players actual hidden PP
+						</WarningCard>
+						{typeofPP === 'Hidden PP' ? (
+							<Infobox></Infobox>
+						) : (
+							<div></div>
+						)}
+					</div>
+					{typeofPP === 'Total PP'
+						? filterLeaderboard.map(
+								(player: any, index: number) => {
+									return (
+										<LeaderboardCard
+											placement={Math.floor(
+												Math.random() * 2
+											)}
+											key={player.user.id}
+											global_rank={player.global_rank}
+											userId={player.user.id}
+											username={player.user.username}
+											avatar={player.user.avatar_url}
+											gamemode={gamemode}
+											typeofPP={typeofPP}
+											index={index}></LeaderboardCard>
+									);
+								}
+						  )
+						: hiddenLeaderboard.map((player, index) => {
+								return (
+									<div
+										key={index}
+										className='flex gap-4 items-center justify-between px-8 w-[70%] bg-osu_background_card'>
+										<h2>{player.username}</h2>
+										<div className='flex gap-8 p-6 rounded-md'>
+											<p>4k:</p>
+											{player.hidden_pp['PP']['HD']['4K']}
+										</div>
+										<div className='flex gap-8  p-6 rounded-md'>
+											<p>7k:</p>
+											{player.hidden_pp['PP']['HD']['7K']}
+										</div>
+									</div>
+								);
+						  })}
 				</div>
 			</main>
 

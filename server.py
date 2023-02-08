@@ -10,11 +10,11 @@ client = MongoClient(
 
 db = client["osuapi"]
 
-
+# deletes current leaderboard collection to make space for new and updated one
 db["leaderboard"].drop()
 collection = db["leaderboard"]
 
-
+# TODO Get bearer token from API
 bearer = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxOTI3MSIsImp0aSI6ImQ0NDY2NDhkNWNhYjRhMTc1NGIzOGVmYzViY2Y4YWU0NjQ1MjViOTUyOWVjZDg5ZDViYjNkN2E0MTgyYjY5ZWY5MmM5OTA0NGE5ODMzYmVhIiwiaWF0IjoxNjc1ODU5NjU2LjQzNjM3OSwibmJmIjoxNjc1ODU5NjU2LjQzNjM4MiwiZXhwIjoxNjc1OTQ2MDU2LjQzMTE0NSwic3ViIjoiIiwic2NvcGVzIjpbInB1YmxpYyJdfQ.bEYxUp5XeDWnTq3gbdZi6hDqZvnxpHuadA0st9aIN0WplJQKD3T2lIKVW8iCB90pbTO221vfUU6n_i1-oMLwc9UqKRi7en1rsKAIIcrEEEDfaO9sUdazj7SEp3AwBFRYIoiSjR9-8zQwV2LLeluaqr3k7mF1XcqsC4Nw2_mChAq9SY-8qWye1H18k5zEf0TFxcIkvEQA0o0mle2o6tdxa936mAI_Zv8vo_42w6-UI2L6wYoSR96NEGth6zeyzfzMWxlcfwW93Oc8gG8rSXwA6UlIOsd3oDDhZZiQE_AFfgttA5wzjGOO7yKRMO8OaAGX3RvMHiLieRsg-alSXFpETJAWaB1nMkRiWFrx4ceywhUVoFS2c9wt29RGFNCUiE0IhmiVAutyFXE1BdEddK_oi83ky_ks4JI7-9Rj-TR7u-TeSN6Ax0QYMTCZRD6OuC41DTnYsWG3QvB5gC-vEuxRzsDSvVA0G-Rtk5Jyb8LDdqNvR9OfPzpTT__GvVwmoDDlWlbiutoVF7qpLxV92rsTRV1EtkP0m2-xNtVLrPOQF0LjHQ1KG0-7WGvLAbsB5XjsLYw4SddmU7vGXXkWTxP23AoXRhR7J_1b5wych9ivJIjcAWKyVYB6_EoKWteZVTvkI4OImPq8RoSj-fp1TSc-b2L7P1QVa3zFRGs_bsdhZkE"
 
 UserHDScoresURI = "http://localhost:3000/api/GetUserHDScore"
@@ -35,7 +35,7 @@ for player in leaderboard:
     player_ids.append(player["user"]["id"])
     players.append(player)
 
-limit = 25
+limit = 50
 
 
 def getUserBestScores(id):
