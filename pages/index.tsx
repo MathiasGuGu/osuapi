@@ -11,7 +11,6 @@ import News from '../components/News';
 const website_uri = 'https://osunorway.vercel.app/';
 
 export default function Home(data: any) {
-	console.log(data);
 	useEffect(() => {
 		const getSessionToken = async () => {
 			const response = await fetch(
@@ -129,7 +128,6 @@ export async function getServerSideProps({ req, res }: any) {
 
 	const leaderData = await fetch(url, options);
 	const data = await leaderData.json();
-	console.log(data.ranking[0].user);
 	return {
 		props: {
 			data,
