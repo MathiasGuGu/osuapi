@@ -6,8 +6,7 @@ from pymongo import MongoClient
 
 # FINISHED connect mongodb to python script to integrate hidden pp system
 client = MongoClient(
-    "mongodb+srv://magugu:OafDntjJAsXbesG0@osuapi.7meijyj.mongodb.net/?retryWrites=true&w=majority")
-
+   
 db = client["osuapi"]
 
 # deletes current leaderboard collection to make space for new and updated one
