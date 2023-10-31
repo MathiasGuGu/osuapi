@@ -34,7 +34,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     };
     body = {
       client_id: 19271,
-      client_secret: "aYIYEVy5XEPPoheQHSsKC2HPD6wjBQVfTz39RN6G",
       code: req.body["authCode"],
       grant_type: "authorization_code",
       redirect_uri: "https://osunorway.vercel.app/",
