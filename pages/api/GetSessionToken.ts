@@ -12,7 +12,7 @@ export default async function handler(
   };
   let body = {
     client_id: 19271,
-    client_secret: "aYIYEVy5XEPPoheQHSsKC2HPD6wjBQVfTz39RN6G",
+    client_secret: 
     grant_type: "client_credentials",
     scope: "public",
   };
